@@ -7,6 +7,7 @@ public class Text {
     private static final int SECONDS_PER_MINUTE = 60;
     private static final int SECONDS_PER_HOUR = 3600;
     private static final int SECONDS_PER_DAY = 86400;
+    private boolean isTimerRunning;
     private int wordCount;
     private long elapsedTime;
     private String title;
@@ -27,12 +28,14 @@ public class Text {
     // EFFECTS: begins the timer
     public void startTimer() {
         start = Instant.now();
+        isTimerRunning = true;
     }
 
     // REQUIRES: timer is running
     // MODIFIES: this
     // EFFECTS: stops the timer and adds elapsed time to total (in seconds)
     public void endTimer() {
+        isTimerRunning = false;
         end = Instant.now();
         Duration duration = Duration.between(start, end);
         elapsedTime += duration.toSeconds();
@@ -43,6 +46,7 @@ public class Text {
     // EFFECTS: increases the elapsed time by given time (seconds)
     public void addTime(long time) {
         elapsedTime += time;
+
     }
 
     // REQUIRES: given time interval is not negative, elapsedTime - time >= 0
@@ -68,6 +72,10 @@ public class Text {
     // EFFECTS: changes the text's word count
     public void editWordCount(int newWordCount) {
         this.wordCount = newWordCount;
+    }
+
+    public boolean getTimerStatus() {
+        return this.isTimerRunning;
     }
 
     public int getWordCount() {

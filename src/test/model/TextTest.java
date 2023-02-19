@@ -57,8 +57,10 @@ class TextTest {
     @Test
     public void testTimer() throws InterruptedException {
         tt1.startTimer();
+        assertTrue(tt1.getTimerStatus());
         Thread.sleep(2000);
         tt1.endTimer();
+        assertFalse(tt1.getTimerStatus());
         assertEquals(2, tt1.getElapsedTime());
 
     }

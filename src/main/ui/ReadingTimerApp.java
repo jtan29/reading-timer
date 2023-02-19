@@ -1,8 +1,10 @@
 package ui;
 
 import exceptions.InvalidSelectionException;
-import model.OnlineText;
+import exceptions.TimerAlreadyRunningException;
+import exceptions.TimerNotStartedException;
 import model.ListOfText;
+import model.OnlineText;
 import model.Text;
 
 import java.util.Scanner;
@@ -34,6 +36,10 @@ public class ReadingTimerApp {
                     handleInputs(currentInput);
                 } catch (InvalidSelectionException e) {
                     System.out.println("Invalid selection.");
+                } catch (TimerAlreadyRunningException e) {
+                    System.out.println("Timer is already running for the selected text.");
+                } catch (TimerNotStartedException e) {
+                    System.out.println("There is no timer running for the selected text.");
                 }
             }
 
@@ -62,21 +68,22 @@ public class ReadingTimerApp {
         }
     }
 
+    // EFFECTS: displays the main menu
     private void showMainMenu() {
         showTexts();
         System.out.println("\nEnter one of the following commands:");
         System.out.println("\tq -> quit");
         System.out.println("\tadd -> add a new text");
         System.out.println("\tremove -> remove a text");
-        System.out.println("\tstart -> start the timer for a text");
-        System.out.println("\tend -> end the timer for a text");
+        System.out.println("\ttimer -> show timer submenu");
         System.out.println("\tshow -> show details for a text");
         System.out.println("\tedit -> edit a text's details");
     }
 
     // MODIFIES: this
     // EFFECTS: based on user inputs, performs various commands
-    private void handleInputs(String input) throws InvalidSelectionException {
+    private void handleInputs(String input) throws InvalidSelectionException, TimerAlreadyRunningException,
+            TimerNotStartedException {
         switch (input) {
             case ("add"): {
                 createText();
@@ -86,12 +93,8 @@ public class ReadingTimerApp {
                 removeTextAt();
                 break;
             }
-            case ("start"): {
-                startTimer();
-                break;
-            }
-            case ("end"): {
-                endTimer();
+            case ("timer"): {
+                timerMenu();
                 break;
             }
             case ("show"): {
@@ -158,7 +161,6 @@ public class ReadingTimerApp {
 
     // MODIFIES: this
     // EFFECTS: opens menu to edit texts
-
     private void editText() throws InvalidSelectionException {
         System.out.println("title -> change title");
         System.out.println("word -> change word count");
@@ -175,6 +177,8 @@ public class ReadingTimerApp {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: prompts user to select a text to edit
     private void selectText() throws InvalidSelectionException {
         System.out.println("Enter the number of the text you would like to select:");
         int selector = input.nextInt();
@@ -186,8 +190,7 @@ public class ReadingTimerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: shows the list of all texts in the list and a number, user can enter a number and then the desired
-    //          new title to change the title of that text
+    // EFFECTS: changes title for selected text
     private void editTextTitle() throws InvalidSelectionException {
         showTexts();
         selectText();
@@ -199,8 +202,7 @@ public class ReadingTimerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: shows the list of all texts in the list and a number, user can enter a number and then the desired
-    //          new word count to change the word count of that text
+    // EFFECTS: changes word count for selected text
     private void editTextWordCount() throws InvalidSelectionException {
         showTexts();
         selectText();
@@ -211,27 +213,53 @@ public class ReadingTimerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: begins the timer for a specified text using its number
-    private void startTimer() throws InvalidSelectionException {
-        showTexts();
-        selectText();
-        selectedText.startTimer();
-        System.out.println("Starting timer!");
+    // EFFECTS: shows the timer submenu
+    private void timerMenu() throws InvalidSelectionException, TimerAlreadyRunningException, TimerNotStartedException {
+        System.out.println("start -> start the timer on a text");
+        System.out.println("end -> end the timer on a text");
+        String selector = input.next();
+        if (selector.equals("start")) {
+            startTimer();
+        } else {
+            if (selector.equals("end")) {
+                endTimer();
+            } else {
+                System.out.println("Invalid entry.");
+            }
+        }
 
     }
 
     // MODIFIES: this
-    // EFFECTS: ends the timer for specified text using its number
-    private void endTimer() throws InvalidSelectionException {
+    // EFFECTS: begins the timer for the selected text
+    private void startTimer() throws InvalidSelectionException, TimerAlreadyRunningException {
         showTexts();
         selectText();
-        selectedText.endTimer();
-        System.out.println("Ending timer!");
+        if (selectedText.getTimerStatus()) {
+            throw new TimerAlreadyRunningException();
+        } else {
+            selectedText.startTimer();
+            System.out.println("Starting timer!");
+        }
 
     }
 
     // MODIFIES: this
-    // EFFECTS: shows a texts details
+    // EFFECTS: ends the timer for the selected text
+    private void endTimer() throws InvalidSelectionException, TimerNotStartedException {
+        showTexts();
+        selectText();
+        if (selectedText.getTimerStatus()) {
+            selectedText.endTimer();
+            System.out.println("Ending timer!");
+        } else {
+            throw new TimerNotStartedException();
+        }
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: shows a text's details
     private void showDetails() throws InvalidSelectionException {
         showTexts();
         selectText();
