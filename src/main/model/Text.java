@@ -4,9 +4,11 @@ import java.time.Duration;
 import java.time.Instant;
 
 public class Text {
-    private static final int SECONDS_PER_MINUTE = 60;
+
+    public static final int SECONDS_PER_MINUTE = 60;
     private static final int SECONDS_PER_HOUR = 3600;
     private static final int SECONDS_PER_DAY = 86400;
+    private Genre genre;
     private boolean isTimerRunning;
     private int wordCount;
     private long elapsedTime;
@@ -14,14 +16,16 @@ public class Text {
     private Instant start;
     private Instant end;
 
+
     // REQUIRES: wordCount > 0, name and genre are not empty strings
     // EFFECTS: sets the text's word count to wordCount, the text's name is
     //          set to the given name, and the text's genre is set to the given genre
-    public Text(int wordCount, String title) {
+
+    public Text(int wordCount, String title, Genre genre) {
         this.wordCount = wordCount;
         this.title = title;
+        this.genre = genre;
         elapsedTime = 0;
-
     }
 
 
@@ -74,6 +78,32 @@ public class Text {
         this.wordCount = newWordCount;
     }
 
+    // EFFECTS: calculates a day/hours/minutes/seconds statement for the elapsed time
+    public String calcTimeStatement() {
+        long elapsedDays = elapsedTime / SECONDS_PER_DAY;
+        long remainingTime = elapsedTime - (elapsedDays * SECONDS_PER_DAY);
+        long elapsedHours = remainingTime / SECONDS_PER_HOUR;
+        remainingTime = remainingTime - (elapsedHours * SECONDS_PER_HOUR);
+        long elapsedMinutes = remainingTime / SECONDS_PER_MINUTE;
+        remainingTime = remainingTime - (elapsedMinutes * SECONDS_PER_MINUTE);
+        String toPrint = "\n" + elapsedDays + " " + "day(s), " + elapsedHours + " hour(s), "
+                + elapsedMinutes + " minute(s) "
+                + remainingTime + " second(s).";
+        return toPrint;
+    }
+
+    // EFFECTS: calculates the average reading speed
+    public long calcReadingSpeed() {
+        long readingSpeed;
+        if ((elapsedTime / SECONDS_PER_MINUTE) == 0) {
+            readingSpeed = wordCount;
+        } else {
+            readingSpeed = wordCount / (elapsedTime / SECONDS_PER_MINUTE);
+        }
+        return readingSpeed;
+    }
+
+
     public boolean getTimerStatus() {
         return this.isTimerRunning;
     }
@@ -90,26 +120,8 @@ public class Text {
         return this.elapsedTime;
     }
 
-    public String calcTimeStatement() {
-        long elapsedDays = elapsedTime / SECONDS_PER_DAY;
-        long remainingTime = elapsedTime - (elapsedDays * SECONDS_PER_DAY);
-        long elapsedHours = remainingTime / SECONDS_PER_HOUR;
-        remainingTime = remainingTime - (elapsedHours * SECONDS_PER_HOUR);
-        long elapsedMinutes = remainingTime / SECONDS_PER_MINUTE;
-        remainingTime = remainingTime - (elapsedMinutes * SECONDS_PER_MINUTE);
-        String toPrint = "\n" + elapsedDays + " " + "day(s), " + elapsedHours + " hour(s), "
-                + elapsedMinutes + " minute(s) "
-                + remainingTime + " second(s).";
-        return toPrint;
+    public Genre getGenre() {
+        return this.genre;
     }
 
-    public long calcReadingSpeed() {
-        long readingSpeed;
-        if ((elapsedTime / SECONDS_PER_MINUTE) == 0) {
-            readingSpeed = wordCount / 1;
-        } else {
-            readingSpeed = wordCount / (elapsedTime / SECONDS_PER_MINUTE);
-        }
-        return readingSpeed;
-    }
 }

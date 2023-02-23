@@ -14,9 +14,9 @@ public class ListOfTextTest {
 
     @BeforeEach
     public void setUp() {
-        tt1 = new Text(100, "Test");
-        tt2 = new Text(200, "Another Test");
-        tt3 = new Text(300, "Test Three");
+        tt1 = new Text(100, "Test", FictionGenre.GENERAL);
+        tt2 = new Text(200, "Another Test", NonFictionGenre.ARTICLE);
+        tt3 = new Text(300, "Test Three", FictionGenre.GENERAL);
 
         lot1 = new ListOfText();
         lot2 = new ListOfText();
@@ -73,6 +73,36 @@ public class ListOfTextTest {
         lot1.removeText(tt1);
         assertEquals(1, lot1.getNumOfTexts());
         assertEquals(tt3, lot1.getTextAt(0));
+    }
+
+    @Test
+    public void testCalcTotalAverageReadingSpeedOneText() {
+        tt1.addTime(1000);
+        lot1.addText(tt1);
+        int result = lot1.calcGenreReadingSpeed(FictionGenre.GENERAL);
+        assertEquals(6, result);
+    }
+
+    @Test
+    public void testCalcTotalAverageReadingSpeedTwoTextsSameGenre() {
+        tt1.addTime(3600);
+        tt3.addTime(60 * 30);
+        lot1.addText(tt1);
+        lot1.addText(tt3);
+        int result = lot1.calcGenreReadingSpeed(FictionGenre.GENERAL);
+        assertEquals(4, result);
+    }
+
+    @Test
+    public void testCalcTotalAverageReadingSpeedThreeTextsOneDifferentGenre() {
+        tt1.addTime(3600);
+        tt2.addTime(60 * 20);
+        tt3.addTime(60 * 40);
+        lot1.addText(tt1);
+        lot1.addText(tt2);
+        lot1.addText(tt3);
+        int result = lot1.calcGenreReadingSpeed(FictionGenre.GENERAL);
+        assertEquals(4, result);
     }
 
 

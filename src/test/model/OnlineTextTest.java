@@ -10,14 +10,15 @@ public class OnlineTextTest {
 
     @BeforeEach
     public void setUp() {
-        ot1 = new OnlineText(1000, "Test", "https://canvas.ubc.ca");
-        ot2 = new OnlineText(2000, "Another Test", "https://www.youtube.com/");
+        ot1 = new OnlineText(1000, "Test", NonFictionGenre.MEMOIR, "https://canvas.ubc.ca");
+        ot2 = new OnlineText(2000, "Another Test", FictionGenre.GENERAL,"https://www.youtube.com/");
     }
 
     @Test
     public void testConstructor() {
         assertEquals(1000, ot1.getWordCount());
         assertEquals("Test", ot1.getTitle());
+        assertEquals(NonFictionGenre.MEMOIR, ot1.getGenre());
         assertEquals("https://canvas.ubc.ca", ot1.getLink());
     }
 

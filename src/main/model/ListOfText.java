@@ -24,6 +24,23 @@ public class ListOfText {
         texts.remove(t);
     }
 
+    // EFFECTS: returns average reading speed for given genre of texts in list
+    public int calcGenreReadingSpeed(Genre g) {
+        int totalWordCount = 0;
+        int totalElapsedTime = 0;
+        for (Text t: texts) {
+            if (t.getGenre() == g) {
+                totalWordCount += t.getWordCount();
+                totalElapsedTime += t.getElapsedTime();
+            }
+        }
+        if (totalElapsedTime > 0) {
+            return totalWordCount / (totalElapsedTime / Text.SECONDS_PER_MINUTE);
+        } else {
+            return totalWordCount;
+        }
+    }
+
     public int getNumOfTexts() {
         return texts.size();
     }

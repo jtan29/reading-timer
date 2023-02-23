@@ -3,8 +3,8 @@ package model;
 public class OnlineText extends Text {
     private String link;
 
-    public OnlineText(int wordCount, String title, String link) {
-        super(wordCount, title);
+    public OnlineText(int wordCount, String title, Genre g, String link) {
+        super(wordCount, title, g);
         this.link = link;
     }
 

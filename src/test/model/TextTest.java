@@ -9,8 +9,8 @@ class TextTest {
     private Text tt2;
     @BeforeEach
     public void setUpTest() {
-        tt1 = new Text(1000, "Test");
-        tt2 = new Text(5000, "Another Test");
+        tt1 = new Text(1000, "Test", FictionGenre.GRAPHIC);
+        tt2 = new Text(5000, "Another Test", NonFictionGenre.MEMOIR);
     }
 
     @Test
@@ -18,9 +18,11 @@ class TextTest {
         assertEquals("Test", tt1.getTitle());
         assertEquals(1000, tt1.getWordCount());
         assertEquals(0, tt1.getElapsedTime());
+        assertEquals(FictionGenre.GRAPHIC, tt1.getGenre());
         assertEquals("Another Test", tt2.getTitle());
         assertEquals(5000, tt2.getWordCount());
         assertEquals(0, tt2.getElapsedTime());
+        assertEquals(NonFictionGenre.MEMOIR, tt2.getGenre());
     }
 
     @Test
