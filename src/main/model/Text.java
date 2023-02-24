@@ -6,9 +6,11 @@ import java.time.Instant;
 public class Text {
 
     public static final int SECONDS_PER_MINUTE = 60;
-    private static final int SECONDS_PER_HOUR = 3600;
-    private static final int SECONDS_PER_DAY = 86400;
+    public static final int SECONDS_PER_HOUR = 3600;
+    public static final int SECONDS_PER_DAY = 86400;
+
     private Genre genre;
+    private boolean isComplete;
     private boolean isTimerRunning;
     private int wordCount;
     private long elapsedTime;
@@ -26,6 +28,8 @@ public class Text {
         this.title = title;
         this.genre = genre;
         elapsedTime = 0;
+        isTimerRunning = false;
+        isComplete = false;
     }
 
 
@@ -91,7 +95,8 @@ public class Text {
                 + remainingTime + " second(s).";
         return toPrint;
     }
-
+    
+// REQUIRES: the text is marked complete
     // EFFECTS: calculates the average reading speed
     public long calcReadingSpeed() {
         long readingSpeed;
@@ -101,6 +106,14 @@ public class Text {
             readingSpeed = wordCount / (elapsedTime / SECONDS_PER_MINUTE);
         }
         return readingSpeed;
+    }
+
+    public void setIsComplete(boolean b) {
+        this.isComplete = b;
+    }
+
+    public boolean getIsComplete() {
+        return this.isComplete;
     }
 
 

@@ -78,6 +78,7 @@ public class ListOfTextTest {
     @Test
     public void testCalcTotalAverageReadingSpeedOneText() {
         tt1.addTime(1000);
+        tt1.setIsComplete(true);
         lot1.addText(tt1);
         int result = lot1.calcGenreReadingSpeed(FictionGenre.GENERAL);
         assertEquals(6, result);
@@ -86,7 +87,9 @@ public class ListOfTextTest {
     @Test
     public void testCalcTotalAverageReadingSpeedTwoTextsSameGenre() {
         tt1.addTime(3600);
+        tt1.setIsComplete(true);
         tt3.addTime(60 * 30);
+        tt3.setIsComplete(true);
         lot1.addText(tt1);
         lot1.addText(tt3);
         int result = lot1.calcGenreReadingSpeed(FictionGenre.GENERAL);
@@ -98,11 +101,43 @@ public class ListOfTextTest {
         tt1.addTime(3600);
         tt2.addTime(60 * 20);
         tt3.addTime(60 * 40);
+        tt1.setIsComplete(true);
+        tt2.setIsComplete(true);
+        tt3.setIsComplete(true);
         lot1.addText(tt1);
         lot1.addText(tt2);
         lot1.addText(tt3);
         int result = lot1.calcGenreReadingSpeed(FictionGenre.GENERAL);
         assertEquals(4, result);
+    }
+
+    @Test
+    public void testCalcTotalAverageReadingSpeedOneNotComplete() {
+        tt1.addTime(3600);
+        tt2.addTime(60 * 20);
+        tt3.addTime(60 * 40);
+        tt1.setIsComplete(true);
+        tt2.setIsComplete(true);
+        tt3.setIsComplete(false);
+        lot1.addText(tt1);
+        lot1.addText(tt2);
+        lot1.addText(tt3);
+        int result = lot1.calcGenreReadingSpeed(FictionGenre.GENERAL);
+        assertEquals(1, result);
+    }
+
+    @Test
+    public void testCalcReadTime() {
+        tt1.addTime(3600);
+        tt1.setIsComplete(true);
+        tt3.addTime(60 * 30);
+        tt3.setIsComplete(true);
+        lot1.addText(tt1);
+        lot1.addText(tt3);
+        String actualResult = lot1.calcReadingTime(FictionGenre.GENERAL, 1000);
+        String expectedResult = "Your reading speed is: " + "0" + " days, " + "4" + " hours, " + 10 + " minutes";
+        assertEquals(expectedResult, actualResult);
+
     }
 
 

@@ -1,9 +1,6 @@
 package ui;
 
-import exceptions.InvalidEntryException;
-import exceptions.InvalidSelectionException;
-import exceptions.TimerAlreadyRunningException;
-import exceptions.TimerNotStartedException;
+import exceptions.*;
 import model.*;
 
 import java.util.InputMismatchException;
@@ -32,14 +29,14 @@ public class ReadingTimerApp {
             } else {
                 try {
                     handleInputs(currentInput);
-                } catch (InvalidSelectionException e) {
-                    System.out.println("Invalid selection.");
                 } catch (TimerAlreadyRunningException e) {
                     System.out.println("Timer is already running for the selected text.");
                 } catch (TimerNotStartedException e) {
                     System.out.println("There is no timer running for the selected text.");
                 } catch (InvalidEntryException e) {
                     System.out.println("Invalid entry, try again.");
+                } catch (NoTextsOfGenreException e) {
+                    System.out.println("No texts found belonging to specified genre.");
                 }
             }
         }
@@ -92,7 +89,7 @@ public class ReadingTimerApp {
     // MODIFIES: this
     // EFFECTS: based on user inputs, performs various commands
     private void handleInputs(String input) throws InvalidSelectionException, TimerAlreadyRunningException,
-            TimerNotStartedException, InvalidEntryException {
+            TimerNotStartedException, InvalidEntryException, NoTextsOfGenreException {
         switch (input) {
             case ("manage"): {
                 showTextsManager();
@@ -117,7 +114,7 @@ public class ReadingTimerApp {
 
     // MODIFIES: this
     // EFFECTS: shows texts management submenu
-    private void showTextsManager() throws InvalidEntryException, InvalidSelectionException {
+    private void showTextsManager() throws InvalidEntryException, InvalidSelectionException, NoTextsOfGenreException {
         System.out.println("add -> add a text");
         System.out.println("remove -> remove a text");
         System.out.println("stats -> show reading speed statistics for an entire genre");
@@ -132,7 +129,27 @@ public class ReadingTimerApp {
                 break;
             }
             case ("stats"): {
+                showTextsStats();
+                break;
+            }
+            default:
+                throw new InvalidEntryException();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: submenu for the texts manager
+    private void showTextsStats() throws InvalidEntryException, InvalidSelectionException, NoTextsOfGenreException {
+        System.out.println("speed -> show reading speed for whole genre");
+        System.out.println("est -> estimate reading speed of a new text, using a word count and a genre");
+        String nextInput = input.next();
+        switch (nextInput) {
+            case ("speed"): {
                 showGenreReadingSpeed();
+                break;
+            }
+            case ("est"): {
+                calcReadingTime();
                 break;
             }
             default:
@@ -163,19 +180,31 @@ public class ReadingTimerApp {
         System.out.println("First, enter a title:");
         String newTitle = input.next();
         System.out.println("Next, select a genre:");
-        Genre newGenre = selectGenre();
-        int newWordCount;
-        System.out.println("Next, enter a word count:");
+        Genre newGenre;
         try {
-            newWordCount = input.nextInt();
+            newGenre = selectGenre();
         } catch (InputMismatchException e) {
             throw new InvalidEntryException();
         }
-        if (newWordCount < 0) {
+        int newWordCount;
+        try {
+            newWordCount = selectWordCount();
+        } catch (InputMismatchException e) {
             throw new InvalidEntryException();
         }
         Text toAdd = new Text(newWordCount, newTitle, newGenre);
         texts.addText(toAdd);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: word count selector helper
+    private int selectWordCount() throws InvalidEntryException {
+        System.out.println("Next, enter a word count:");
+        int newWordCount = input.nextInt();
+        if (newWordCount < 0) {
+            throw new InvalidEntryException();
+        }
+        return newWordCount;
     }
 
     //  EFFECTS: shows submenu to select a genre to return
@@ -257,7 +286,7 @@ public class ReadingTimerApp {
 
     // MODIFIES: this
     // EFFECTS: removes the text at specified position (index begins with 1)
-    private void removeTextAt() throws InvalidSelectionException {
+    private void removeTextAt() throws InvalidSelectionException, InvalidEntryException {
         selectText();
         texts.removeText(selectedText);
         System.out.println("Removed text with title: " + selectedText.getTitle());
@@ -268,25 +297,38 @@ public class ReadingTimerApp {
     private void editText() throws InvalidSelectionException, InvalidEntryException {
         System.out.println("title -> change title");
         System.out.println("word -> change word count");
+        System.out.println("complete -> toggle completeness");
         String selector = input.next();
-        if (selector.equals("title")) {
-            editTextTitle();
-        } else {
-            if (selector.equals("word")) {
-                editTextWordCount();
-            } else {
-                throw new InvalidEntryException();
+        switch (selector) {
+            case ("title"): {
+                editTextTitle();
+                break;
             }
+            case ("word"): {
+                editTextWordCount();
+                break;
+            }
+            case ("complete"): {
+                toggleTextComplete();
+                break;
+            }
+            default:
+                throw new InvalidEntryException();
         }
 
     }
 
     // MODIFIES: this
     // EFFECTS: prompts user to select a text to edit
-    private void selectText() throws InvalidSelectionException {
+    private void selectText() throws InvalidSelectionException, InvalidEntryException {
         showTexts();
         System.out.println("Enter the number of the text you would like to select:");
-        int selector = input.nextInt();
+        int selector;
+        try {
+            selector = input.nextInt();
+        } catch (InputMismatchException e) {
+            throw new InvalidEntryException();
+        }
         if (selector < 1 || selector > texts.getNumOfTexts()) {
             throw new InvalidSelectionException();
         } else {
@@ -295,8 +337,21 @@ public class ReadingTimerApp {
     }
 
     // MODIFIES: this
+    // EFFECTS: changes whether the text is complete
+    private void toggleTextComplete() throws InvalidSelectionException, InvalidEntryException {
+        selectText();
+        if (selectedText.getIsComplete()) {
+            selectedText.setIsComplete(false);
+            System.out.println("This text is now marked: incomplete.");
+        } else {
+            selectedText.setIsComplete(true);
+            System.out.println("This text is now marked: complete.");
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: changes title for selected text
-    private void editTextTitle() throws InvalidSelectionException {
+    private void editTextTitle() throws InvalidSelectionException, InvalidEntryException {
         selectText();
         System.out.println("Enter the new title for this text:");
         String newTitle = input.next();
@@ -338,7 +393,7 @@ public class ReadingTimerApp {
 
     // MODIFIES: this
     // EFFECTS: begins the timer for the selected text
-    private void startTimer() throws InvalidSelectionException, TimerAlreadyRunningException {
+    private void startTimer() throws InvalidSelectionException, TimerAlreadyRunningException, InvalidEntryException {
         selectText();
         if (selectedText.getTimerStatus()) {
             throw new TimerAlreadyRunningException();
@@ -351,7 +406,7 @@ public class ReadingTimerApp {
 
     // MODIFIES: this
     // EFFECTS: ends the timer for the selected text
-    private void endTimer() throws InvalidSelectionException, TimerNotStartedException {
+    private void endTimer() throws InvalidSelectionException, TimerNotStartedException, InvalidEntryException {
         selectText();
         if (selectedText.getTimerStatus()) {
             selectedText.endTimer();
@@ -364,23 +419,35 @@ public class ReadingTimerApp {
 
     // MODIFIES: this
     // EFFECTS: shows a text's details
-    private void showDetails() throws InvalidSelectionException {
+    private void showDetails() throws InvalidSelectionException, InvalidEntryException {
         selectText();
         System.out.println("Title: " + selectedText.getTitle());
         System.out.println("Word count: " + selectedText.getWordCount());
         System.out.println("Elapsed time: " + selectedText.calcTimeStatement());
         System.out.println("Genre: " + selectedText.getGenre().getGenreDescription());
-        System.out.println("Your average reading speed was: " + selectedText.calcReadingSpeed() + " words/minute.");
-        System.out.println("Note: assumes entire text has been read.");
+        if (selectedText.getIsComplete()) {
+            System.out.println("Your average reading speed was: " + selectedText.calcReadingSpeed() + " words/minute.");
+        } else {
+            System.out.println("Reading speed information will be displayed once text is completed.");
+        }
     }
 
     // EFFECTS: calculates the average reading speed for a genre
-    private void showGenreReadingSpeed() throws InvalidEntryException {
+    private void showGenreReadingSpeed() throws InvalidEntryException, NoTextsOfGenreException {
         System.out.println("Select a genre: ");
         Genre g = selectGenre();
         int readingSpeed = texts.calcGenreReadingSpeed(g);
+        if (readingSpeed == 0) {
+            throw new NoTextsOfGenreException();
+        }
         System.out.println("The average reading speed for genre " + "[" + g.getGenreDescription() + "]"
                 + " was " + readingSpeed + " words/min");
+    }
+
+    private void calcReadingTime() throws InvalidEntryException {
+        Genre g = selectGenre();
+        int wordCount = selectWordCount();
+        System.out.println(texts.calcReadingTime(g, wordCount));
     }
 
 }
