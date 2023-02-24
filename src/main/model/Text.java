@@ -8,6 +8,7 @@ public class Text {
     public static final int SECONDS_PER_MINUTE = 60;
     public static final int SECONDS_PER_HOUR = 3600;
     public static final int SECONDS_PER_DAY = 86400;
+    public static final int MILLISECONDS_PER_SECOND = 1000;
 
     private Genre genre;
     private boolean isComplete;
@@ -46,7 +47,7 @@ public class Text {
         isTimerRunning = false;
         end = Instant.now();
         Duration duration = Duration.between(start, end);
-        elapsedTime += duration.toSeconds();
+        elapsedTime += (duration.toMillis() / MILLISECONDS_PER_SECOND);
     }
 
     // REQUIRES: given time interval is not negative
@@ -95,7 +96,7 @@ public class Text {
                 + remainingTime + " second(s).";
         return toPrint;
     }
-    
+
 // REQUIRES: the text is marked complete
     // EFFECTS: calculates the average reading speed
     public long calcReadingSpeed() {
