@@ -49,7 +49,7 @@ class TextTest {
     }
 
     @Test
-    public void testRemoveTime() {
+    public void testRemoveTimeValid() {
         tt1.addTime(1000);
         tt1.removeTime(200);
         assertEquals(800, tt1.getElapsedTime());
@@ -69,8 +69,14 @@ class TextTest {
 
     @Test
     public void testCalcReadingSpeedLessThan1Min() {
-        tt1.addTime(100);
+        tt1.addTime(40);
         assertEquals(1000, tt1.calcReadingSpeed());
+    }
+
+    @Test
+    public void testCalcReadingSpeedShort() {
+        tt1.addTime(120);
+        assertEquals(500, tt1.calcReadingSpeed());
     }
 
     @Test

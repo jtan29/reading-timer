@@ -58,14 +58,15 @@ public class Text {
 
     }
 
-    // REQUIRES: given time interval is not negative, elapsedTime - time >= 0
+
     // MODIFIES: this
-    // EFFECTS: decreases the elapsed time by given time (seconds)
+    // EFFECTS: decreases the elapsed time by given time (seconds) if given time is less than elapsed time,
+    //          otherwise does nothing
 
     public void removeTime(long time) {
-        elapsedTime = elapsedTime - time;
-        assert time >= 0;
-
+        if (time <= elapsedTime) {
+            elapsedTime = elapsedTime - time;
+        }
     }
 
     // REQUIRES: newTitle is not empty string

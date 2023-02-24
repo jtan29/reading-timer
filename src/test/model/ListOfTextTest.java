@@ -2,6 +2,9 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.beans.beancontext.BeanContext;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -127,6 +130,21 @@ public class ListOfTextTest {
     }
 
     @Test
+    public void testCalcTotalAverageReadingSpeedLessThan1Min() {
+        tt1.addTime(1);
+        tt2.addTime(1);
+        tt3.addTime(1);
+        tt1.setIsComplete(true);
+        tt2.setIsComplete(true);
+        tt3.setIsComplete(false);
+        lot1.addText(tt1);
+        lot1.addText(tt2);
+        lot1.addText(tt3);
+        int result = lot1.calcGenreReadingSpeed(FictionGenre.GENERAL);
+        assertEquals(100, result);
+    }
+
+    @Test
     public void testCalcReadTime() {
         tt1.addTime(3600);
         tt1.setIsComplete(true);
@@ -138,6 +156,19 @@ public class ListOfTextTest {
         String expectedResult = "Your reading speed is: " + "0" + " days, " + "4" + " hours, " + 10 + " minutes";
         assertEquals(expectedResult, actualResult);
 
+    }
+
+    @Test
+    public void testCalcReadTimeNone() {
+        tt1.addTime(3600);
+        tt1.setIsComplete(true);
+        tt3.addTime(60 * 30);
+        tt3.setIsComplete(true);
+        lot1.addText(tt1);
+        lot1.addText(tt3);
+        String actualResult = lot1.calcReadingTime(FictionGenre.SHORT_STORY, 1000);
+        String expectedResult = "No texts with given genre.";
+        assertEquals(expectedResult, actualResult);
     }
 
 
