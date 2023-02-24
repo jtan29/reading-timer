@@ -57,6 +57,13 @@ class TextTest {
     }
 
     @Test
+    public void testRemoveTimeInvalid() {
+        tt1.addTime(1000);
+        tt1.removeTime(2000);
+        assertEquals(1000, tt1.getElapsedTime());
+    }
+
+    @Test
     public void testTimer() throws InterruptedException {
         tt1.startTimer();
         assertTrue(tt1.getTimerStatus());

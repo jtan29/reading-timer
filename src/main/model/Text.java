@@ -98,7 +98,7 @@ public class Text {
         return toPrint;
     }
 
-// REQUIRES: the text is marked complete
+    // REQUIRES: the text is marked complete
     // EFFECTS: calculates the average reading speed
     public long calcReadingSpeed() {
         long readingSpeed;
