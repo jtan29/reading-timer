@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.beans.beancontext.BeanContext;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +29,10 @@ public class ListOfTextTest {
     @Test
     public void testConstructor() {
         assertEquals(0, lot1.getNumOfTexts());
+        List<Text> testList = new ArrayList<>();
+        assertEquals(testList, lot1.getTexts());
         assertEquals(0, lot2.getNumOfTexts());
+        assertEquals(testList, lot2.getTexts());
     }
 
     @Test

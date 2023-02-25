@@ -1,4 +1,4 @@
-package exceptions;
+package ui.exceptions;
 
 public class InvalidEntryException extends Exception {
 }

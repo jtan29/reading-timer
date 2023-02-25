@@ -1,7 +1,8 @@
 package ui;
 
-import exceptions.*;
+
 import model.*;
+import ui.exceptions.*;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -419,7 +420,7 @@ public class ReadingTimerApp {
 
     // MODIFIES: this
     // EFFECTS: shows a text's details
-    private void showDetails() throws InvalidEntryException {
+    private void showDetails() throws InvalidSelectionException, InvalidEntryException {
         selectText();
         System.out.println("Title: " + selectedText.getTitle());
         System.out.println("Word count: " + selectedText.getWordCount());
