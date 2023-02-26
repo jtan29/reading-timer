@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests for OnlineText class
 public class OnlineTextTest {
     private OnlineText ot1;
     private OnlineText ot2;

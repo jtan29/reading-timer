@@ -1,5 +1,6 @@
 package model;
 
+// Representation of available fictional genres for a text
 public enum FictionGenre implements Genre {
     GENERAL("Fiction book"),
     YA("Young adult book"),

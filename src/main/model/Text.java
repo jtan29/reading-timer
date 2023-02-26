@@ -3,6 +3,7 @@ package model;
 import java.time.Duration;
 import java.time.Instant;
 
+// Representation of a text, with a genre, timer, tracked elapsed time (in seconds), a word count, and a title
 public class Text {
 
     public static final int SECONDS_PER_MINUTE = 60;
@@ -20,9 +21,11 @@ public class Text {
     private Instant end;
 
 
-    // REQUIRES: wordCount > 0, name and genre are not empty strings
-    // EFFECTS: sets the text's word count to wordCount, the text's name is
-    //          set to the given name, and the text's genre is set to the given genre
+    // REQUIRES: wordCount >= 0
+    // EFFECTS: sets the text's word count to wordCount, the text's title is
+    //          set to the given title, and the text's genre is set to the given genre.
+    //          Begins with zero seconds elapsed and marks the text as not having a running timer
+    //          and incomplete.
 
     public Text(int wordCount, String title, Genre genre) {
         this.wordCount = wordCount;
@@ -33,7 +36,8 @@ public class Text {
         isComplete = false;
     }
 
-
+    // REQUIRES: timer is not running
+    // MODIFIES: this
     // EFFECTS: begins the timer
     public void startTimer() {
         start = Instant.now();
@@ -44,8 +48,8 @@ public class Text {
     // MODIFIES: this
     // EFFECTS: stops the timer and adds elapsed time to total (in seconds)
     public void endTimer() {
-        isTimerRunning = false;
         end = Instant.now();
+        isTimerRunning = false;
         Duration duration = Duration.between(start, end);
         elapsedTime += (duration.toMillis() / MILLISECONDS_PER_SECOND);
     }
@@ -55,7 +59,6 @@ public class Text {
     // EFFECTS: increases the elapsed time by given time (seconds)
     public void addTime(long time) {
         elapsedTime += time;
-
     }
 
 
@@ -69,15 +72,13 @@ public class Text {
         }
     }
 
-    // REQUIRES: newTitle is not empty string
     // MODIFIES: this
     // EFFECTS: changes the text's title
     public void editTitle(String newTitle) {
         this.title = newTitle;
-
     }
 
-    // REQUIRES: newWordCount > 0
+    // REQUIRES: newWordCount >= 0
     // MODIFIES: this
     // EFFECTS: changes the text's word count
     public void editWordCount(int newWordCount) {
@@ -92,14 +93,13 @@ public class Text {
         remainingTime = remainingTime - (elapsedHours * SECONDS_PER_HOUR);
         long elapsedMinutes = remainingTime / SECONDS_PER_MINUTE;
         remainingTime = remainingTime - (elapsedMinutes * SECONDS_PER_MINUTE);
-        String toPrint = "\n" + elapsedDays + " " + "day(s), " + elapsedHours + " hour(s), "
+        return "\n" + elapsedDays + " " + "day(s), " + elapsedHours + " hour(s), "
                 + elapsedMinutes + " minute(s) "
                 + remainingTime + " second(s).";
-        return toPrint;
     }
 
     // REQUIRES: the text is marked complete
-    // EFFECTS: calculates the average reading speed
+    // EFFECTS: calculates the average reading speed for the text
     public long calcReadingSpeed() {
         long readingSpeed;
         if ((elapsedTime / SECONDS_PER_MINUTE) == 0) {
@@ -117,7 +117,6 @@ public class Text {
     public boolean getIsComplete() {
         return this.isComplete;
     }
-
 
     public boolean getTimerStatus() {
         return this.isTimerRunning;

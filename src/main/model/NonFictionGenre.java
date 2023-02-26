@@ -1,5 +1,6 @@
 package model;
 
+// Representation of available non-fictional genres for a text
 public enum NonFictionGenre implements Genre {
     ARTICLE("Non-fiction article"),
     TEXTBOOK("Textbook or other educational book"),

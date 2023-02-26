@@ -3,13 +3,13 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.beans.beancontext.BeanContext;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+// Tests for ListOfText class
 public class ListOfTextTest {
     private Text tt1;
     private Text tt2;
@@ -176,5 +176,11 @@ public class ListOfTextTest {
         assertEquals(expectedResult, actualResult);
     }
 
-
+    @Test
+    public void testGetTextAt() {
+        lot1.addText(tt1);
+        lot1.addText(tt2);
+        lot1.addText(tt3);
+        assertEquals(tt3, lot1.getTextAt(2));
+    }
 }
