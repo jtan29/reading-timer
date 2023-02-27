@@ -3,7 +3,7 @@ package model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-// Tests for NonFictionGenre enumeration
+
 public class NonFictionGenreTest {
     @Test
     public void testConstructor() {

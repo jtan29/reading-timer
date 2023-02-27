@@ -9,7 +9,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Tests for ListOfText class
 public class ListOfTextTest {
     private Text tt1;
     private Text tt2;

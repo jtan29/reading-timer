@@ -1,5 +1,5 @@
 package ui.exceptions;
 
-// Represents a user input to end a timer when it is not already running
+// Represents an error when a user input is given to end a timer that is not already running
 public class TimerNotStartedException extends Exception {
 }

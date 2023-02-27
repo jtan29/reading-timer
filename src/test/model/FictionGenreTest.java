@@ -4,7 +4,7 @@ package model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-// Tests for FictionGenre enumeration
+
 public class FictionGenreTest {
     @Test
     public void testConstructor() {

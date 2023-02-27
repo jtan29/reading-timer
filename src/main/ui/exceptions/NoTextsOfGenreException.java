@@ -1,5 +1,5 @@
 package ui.exceptions;
 
-// Represents a user input of a genre when there are no works in the list for it
+// Represents an error when a user selects a genre for which there are no texts
 public class NoTextsOfGenreException extends Exception {
 }

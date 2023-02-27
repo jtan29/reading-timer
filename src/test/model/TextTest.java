@@ -4,8 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-// Tests for Text class
-class TextTest {
+
+public class TextTest {
     private Text tt1;
     private Text tt2;
     @BeforeEach

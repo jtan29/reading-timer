@@ -1,5 +1,5 @@
 package ui.exceptions;
 
-// Represents a user input to start a timer for a text that has its timer already running
+// Represents an error when a user input is given to start a timer that is already running
 public class TimerAlreadyRunningException extends Exception {
 }

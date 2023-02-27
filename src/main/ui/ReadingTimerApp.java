@@ -367,12 +367,16 @@ public class ReadingTimerApp {
     private void editTextWordCount() throws InvalidEntryException {
         selectText();
         System.out.println("Enter the new word count for this text:");
-        int newWordCount = input.nextInt();
+        int newWordCount;
+        try {
+            newWordCount = input.nextInt();
+        } catch (InputMismatchException e) {
+            throw new InvalidEntryException();
+        }
         if (newWordCount < 0) {
             throw new InvalidEntryException();
         }
         selectedText.editWordCount(newWordCount);
-
     }
 
     // MODIFIES: this
@@ -439,7 +443,12 @@ public class ReadingTimerApp {
     // EFFECTS: calculates the average reading speed for the user-inputted genre, and displays it
     private void showGenreReadingSpeed() throws InvalidEntryException, NoTextsOfGenreException {
         System.out.println("Select a genre: ");
-        Genre g = selectGenre();
+        Genre g;
+        try {
+            g = selectGenre();
+        } catch (InputMismatchException e) {
+            throw new InvalidEntryException();
+        }
         int readingSpeed = texts.calcGenreReadingSpeed(g);
         if (readingSpeed == 0) {
             throw new NoTextsOfGenreException();
@@ -450,8 +459,18 @@ public class ReadingTimerApp {
 
     // EFFECTS: calculates the reading time for the user-inputted genre, word count
     private void calcReadingTime() throws InvalidEntryException {
-        Genre g = selectGenre();
-        int wordCount = selectWordCount();
+        Genre g;
+        try {
+            g = selectGenre();
+        } catch (InputMismatchException e) {
+            throw new InvalidEntryException();
+        }
+        int wordCount;
+        try {
+            wordCount = selectWordCount();
+        } catch (InputMismatchException e) {
+            throw new InvalidEntryException();
+        }
         System.out.println(texts.calcReadingTime(g, wordCount));
     }
 }

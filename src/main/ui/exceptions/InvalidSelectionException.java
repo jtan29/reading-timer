@@ -1,5 +1,5 @@
 package ui.exceptions;
 
-// Represents a user input that is the right type but outside the available selection range
+// Represents an error when user input is the right type but out of the range
 public class InvalidSelectionException extends InvalidEntryException {
 }
