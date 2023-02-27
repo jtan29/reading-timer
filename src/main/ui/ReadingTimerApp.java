@@ -440,6 +440,7 @@ public class ReadingTimerApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: calculates the average reading speed for the user-inputted genre, and displays it
     private void showGenreReadingSpeed() throws InvalidEntryException, NoTextsOfGenreException {
         System.out.println("Select a genre: ");
@@ -457,6 +458,7 @@ public class ReadingTimerApp {
                 + " was " + readingSpeed + " words/min");
     }
 
+    // MODIFIES: this
     // EFFECTS: calculates the reading time for the user-inputted genre, word count
     private void calcReadingTime() throws InvalidEntryException {
         Genre g;

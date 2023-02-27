@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 // Representation of a text, with a genre, timer, tracked elapsed time (in seconds), a word count, and a title
+// Note: implementation of the timer made with the help of guide from https://www.baeldung.com/java-measure-elapsed-time
 public class Text {
 
     public static final int SECONDS_PER_MINUTE = 60;
