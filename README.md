@@ -43,3 +43,6 @@ a text, so that the reading speed can be calculated.
 - As a user, I want to be able to estimate the time 
 needed to finish reading a text using data 
 from selected previously completed texts.
+- As a user, I want to be able to save my texts, with their word counts, genres, and recorded times, to a file
+- As a user, I want to be able to load my texts (with their details) from a file when launching the app, allowing
+recording to resume
