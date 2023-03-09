@@ -38,10 +38,8 @@ public class ReadingTimerApp {
             } else {
                 try {
                     handleInputs(currentInput);
-                } catch (TimerAlreadyRunningException e) {
-                    System.out.println("Timer is already running for the selected text.");
-                } catch (TimerNotStartedException e) {
-                    System.out.println("There is no timer running for the selected text.");
+                } catch (TimerException e) {
+                    System.out.println("This action is not possible on the selected text.");
                 } catch (InvalidEntryException e) {
                     System.out.println("Invalid entry, try again.");
                 } catch (NoTextsOfGenreException e) {
@@ -84,18 +82,12 @@ public class ReadingTimerApp {
     // MODIFIES: this
     // EFFECTS: prompts user to save data before shutting down
     private void shutDown() {
-        boolean anyTimerRunning = anyRunningTimer();
-        System.out.println("Save current data? y/n");
-        String currentInput = input.next();
-        if (currentInput.equals("y")) {
-            if (anyTimerRunning) {
-                System.out.println("Ending timers before saving.");
-                endAllTimers();
-            }
+        try {
             saveCurrentListOfText();
-        } else {
-            System.out.println("Thanks for using the Reading Timer App.");
+        } catch (InvalidEntryException e) {
+            System.out.println("Invalid entry. Your data has not been saved.");
         }
+        System.out.println("Thanks for using the Reading Timer App.");
     }
 
     // EFFECTS: displays the current texts
@@ -125,8 +117,7 @@ public class ReadingTimerApp {
 
     // MODIFIES: this
     // EFFECTS: based on user inputs, performs various commands corresponding to the main menu prompts
-    private void handleInputs(String input) throws TimerAlreadyRunningException,
-            TimerNotStartedException, InvalidEntryException, NoTextsOfGenreException {
+    private void handleInputs(String input) throws TimerException, InvalidEntryException, NoTextsOfGenreException {
         switch (input) {
             case ("manage"): {
                 showTextsManager();
@@ -152,9 +143,7 @@ public class ReadingTimerApp {
     // MODIFIES: this
     // EFFECTS: shows texts management submenu, with additional user input prompts to manage the texts
     private void showTextsManager() throws InvalidEntryException, NoTextsOfGenreException {
-        System.out.println("add -> add a text");
-        System.out.println("remove -> remove a text");
-        System.out.println("stats -> show reading speed statistics for an entire genre");
+        showPromptsManage();
         String nextInput = input.next();
         switch (nextInput) {
             case ("add"): {
@@ -169,9 +158,21 @@ public class ReadingTimerApp {
                 showTextsStats();
                 break;
             }
+            case ("save"): {
+                saveCurrentListOfText();
+                break;
+            }
             default:
                 throw new InvalidEntryException();
         }
+    }
+
+    // EFFECTS: shows input prompts for the manage submenu
+    private void showPromptsManage() {
+        System.out.println("add -> add a text");
+        System.out.println("remove -> remove a text");
+        System.out.println("stats -> show reading speed statistics for an entire genre");
+        System.out.println("save -> save current data");
     }
 
     // MODIFIES: this
@@ -512,14 +513,29 @@ public class ReadingTimerApp {
 
     // MODIFIES: this
     // EFFECTS: tries to save the current text data as a json file
-    private void saveCurrentListOfText() {
-        try {
-            writeJson.start();
-            writeJson.writeFile(texts);
-            writeJson.close();
-            System.out.println("Your data has been saved.");
-        } catch (IOException e) {
-            System.out.print("An error occurred attempting to save your data.");
+    private void saveCurrentListOfText() throws InvalidEntryException {
+        boolean anyRunningTimer = anyRunningTimer();
+        System.out.println("Save current data? y/n");
+        String currentInput = input.next();
+        if (currentInput.equals("y")) {
+            if (anyRunningTimer) {
+                System.out.println("Ending timers before saving.");
+                endAllTimers();
+            }
+            try {
+                writeJson.start();
+                writeJson.writeFile(texts);
+                writeJson.close();
+                System.out.println("Your data has been saved.");
+            } catch (IOException e) {
+                System.out.print("An error occurred attempting to save your data.");
+            }
+        } else {
+            if (currentInput.equals("n")) {
+                System.out.println("You have selected to not save your data.");
+            } else {
+                throw new InvalidEntryException();
+            }
         }
     }
 
@@ -550,7 +566,7 @@ public class ReadingTimerApp {
     // MODIFIES: this
     // EFFECTS: ends the timer on all texts with running timers
     private void endAllTimers() {
-        for (Text t: texts.getTexts()) {
+        for (Text t : texts.getTexts()) {
             if (t.getTimerStatus()) {
                 t.endTimer();
             }

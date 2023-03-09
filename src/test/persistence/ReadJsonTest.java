@@ -58,4 +58,33 @@ public class ReadJsonTest {
             fail("should pass");
         }
     }
+
+    @Test
+    public void testListOfTextsWithTextsOtherGenres() {
+        ListOfText texts;
+        try {
+            ReadJson reader = new ReadJson("./data/testListOfTextsWithTextsOtherGenres");
+            texts = reader.read();
+            Text tt1 = texts.getTextAt(0);
+            Text tt2 = texts.getTextAt(1);
+            Text tt3 = texts.getTextAt(2);
+            Text tt4 = texts.getTextAt(3);
+            Text tt5 = texts.getTextAt(4);
+            Text tt6 = texts.getTextAt(5);
+            Text tt7 = texts.getTextAt(6);
+            Text tt8 = texts.getTextAt(7);
+            assertEquals(FictionGenre.GENERAL, tt1.getGenre());
+            assertEquals(FictionGenre.CHILDREN, tt2.getGenre());
+            assertEquals(FictionGenre.GRAPHIC, tt3.getGenre());
+            assertEquals(FictionGenre.OTHER, tt4.getGenre());
+            assertEquals(NonFictionGenre.ARTICLE, tt5.getGenre());
+            assertEquals(NonFictionGenre.SELF_HELP, tt6.getGenre());
+            assertEquals(NonFictionGenre.TEXTBOOK, tt7.getGenre());
+            assertEquals(NonFictionGenre.NF_OTHER, tt8.getGenre());
+        } catch (IOException e) {
+            fail("should not throw exceptions");
+        }
+    }
+
+
 }

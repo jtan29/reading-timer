@@ -74,4 +74,51 @@ public class WriteJsonTest {
             fail("should pass");
         }
     }
+
+    @Test
+    public void testListOfTextsWithTextsOtherGenres() {
+        Text t1 = new Text(100, "A", FictionGenre.GENERAL);
+        Text t2 = new Text(100, "B", FictionGenre.CHILDREN);
+        Text t3 = new Text(100, "C", FictionGenre.GRAPHIC);
+        Text t4 = new Text(100, "D", FictionGenre.OTHER);
+        Text t5 = new Text(100, "E", NonFictionGenre.ARTICLE);
+        Text t6 = new Text(100, "F", NonFictionGenre.SELF_HELP);
+        Text t7 = new Text(100, "G", NonFictionGenre.TEXTBOOK);
+        Text t8 = new Text(100, "H", NonFictionGenre.NF_OTHER);
+        ListOfText texts = new ListOfText();
+        texts.addText(t1);
+        texts.addText(t2);
+        texts.addText(t3);
+        texts.addText(t4);
+        texts.addText(t5);
+        texts.addText(t6);
+        texts.addText(t7);
+        texts.addText(t8);
+        WriteJson writer = new WriteJson("./data/testListOfTextsWithTextsOtherGenres");
+        try {
+            writer.start();
+            writer.writeFile(texts);
+            writer.close();
+            ReadJson reader = new ReadJson("./data/testListOfTextsWithTextsOtherGenres");
+            texts = reader.read();
+            Text tt1 = texts.getTextAt(0);
+            Text tt2 = texts.getTextAt(1);
+            Text tt3 = texts.getTextAt(2);
+            Text tt4 = texts.getTextAt(3);
+            Text tt5 = texts.getTextAt(4);
+            Text tt6 = texts.getTextAt(5);
+            Text tt7 = texts.getTextAt(6);
+            Text tt8 = texts.getTextAt(7);
+            assertEquals(FictionGenre.GENERAL, tt1.getGenre());
+            assertEquals(FictionGenre.CHILDREN, tt2.getGenre());
+            assertEquals(FictionGenre.GRAPHIC, tt3.getGenre());
+            assertEquals(FictionGenre.OTHER, tt4.getGenre());
+            assertEquals(NonFictionGenre.ARTICLE, tt5.getGenre());
+            assertEquals(NonFictionGenre.SELF_HELP, tt6.getGenre());
+            assertEquals(NonFictionGenre.TEXTBOOK, tt7.getGenre());
+            assertEquals(NonFictionGenre.NF_OTHER, tt8.getGenre());
+        } catch (IOException e) {
+            fail("should not throw exceptions");
+        }
+    }
 }
