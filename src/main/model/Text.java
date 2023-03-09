@@ -2,10 +2,13 @@ package model;
 
 import java.time.Duration;
 import java.time.Instant;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.ToWrite;
 
 // Representation of a text, with a genre, timer, tracked elapsed time (in seconds), a word count, and a title
 // Note: implementation of the timer made with the help of guide from https://www.baeldung.com/java-measure-elapsed-time
-public class Text {
+public class Text implements ToWrite {
 
     public static final int SECONDS_PER_MINUTE = 60;
     public static final int SECONDS_PER_HOUR = 3600;
@@ -110,6 +113,18 @@ public class Text {
         }
         return readingSpeed;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("title", title);
+        json.put("wordCount", wordCount);
+        json.put("isComplete", isComplete);
+        json.put("elapsedTime", elapsedTime);
+        json.put("genre", genre);
+        return json;
+    }
+
 
     public void setIsComplete(boolean b) {
         this.isComplete = b;

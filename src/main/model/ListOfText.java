@@ -3,8 +3,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.ToWrite;
+
 // Representation of a collection of texts
-public class ListOfText {
+public class ListOfText implements ToWrite {
     private List<Text> texts;
 
     // MODIFIES: this
@@ -59,6 +63,24 @@ public class ListOfText {
         readTimeRemaining -= (readTimeHours * (Text.SECONDS_PER_HOUR / 60));
         return "Your reading speed is: " + readTimeDays + " days, "
                 + readTimeHours + " hours, " + readTimeRemaining + " minutes";
+    }
+
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("texts", textsIntoJson());
+        return json;
+
+    }
+
+    // EFFECTS: adds the texts in this list of texts into a json array and returns it
+    private JSONArray textsIntoJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Text t: texts) {
+            jsonArray.put(t.toJson());
+        }
+        return jsonArray;
     }
 
     // REQUIRES: 0 <= i <= (size of texts - 1)
