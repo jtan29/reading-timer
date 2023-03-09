@@ -124,4 +124,14 @@ public class TextTest {
                 + 2 + " minute(s) "
                 + 3 + " second(s)."), tt1.calcTimeStatement());
     }
+
+    @Test
+    public void testToJson() {
+        String result = tt1.toJson().toString();
+        String result2 = tt2.toJson().toString();
+        assertEquals("{\"wordCount\":1000,\"genre\":\"GRAPHIC\",\"title\":\"Test\",\"isComplete\":false," +
+                "\"elapsedTime\":0}", result);
+        assertEquals("{\"wordCount\":5000,\"genre\":\"MEMOIR\",\"title\":\"Another Test\",\"isComplete\":false," +
+                "\"elapsedTime\":0}", result2);
+    }
 }

@@ -6,7 +6,7 @@ public enum NonFictionGenre implements Genre {
     TEXTBOOK("Textbook or other educational book"),
     MEMOIR("Memoir, biography, or autobiography"),
     SELF_HELP("Self-help book"),
-    OTHER("Any other non-fiction material");
+    NF_OTHER("Any other non-fiction material");
 
     private final String genreDescription;
 

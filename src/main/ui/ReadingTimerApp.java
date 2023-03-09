@@ -1,8 +1,11 @@
 package ui;
 
 import model.*;
+import persistence.ReadJson;
+import persistence.WriteJson;
 import ui.exceptions.*;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,6 +14,9 @@ public class ReadingTimerApp {
     private ListOfText texts;
     private Scanner input;
     private Text selectedText;
+    private ReadJson readJson;
+    private WriteJson writeJson;
+    private static final String FILE_PATH = "./data/ListOfText.json";
 
     // EFFECTS: constructs the reading timer application
     public ReadingTimerApp() {
@@ -27,6 +33,7 @@ public class ReadingTimerApp {
             String currentInput;
             currentInput = runHelper();
             if (currentInput.equals("q")) {
+                shutDown();
                 run = false;
             } else {
                 try {
@@ -62,6 +69,33 @@ public class ReadingTimerApp {
         System.out.println("Welcome to the Reading Time Tracker.");
         texts = new ListOfText();
         input = new Scanner(System.in);
+        writeJson = new WriteJson(FILE_PATH);
+        readJson = new ReadJson(FILE_PATH);
+        input = new Scanner(System.in);
+        System.out.println("Load from saved file? y/n");
+        String currentInput = input.next();
+        if (currentInput.equals("y")) {
+            loadListOfText();
+        } else {
+            System.out.println("Continuing as new Reading Timer App...");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: prompts user to save data before shutting down
+    private void shutDown() {
+        boolean anyTimerRunning = anyRunningTimer();
+        System.out.println("Save current data? y/n");
+        String currentInput = input.next();
+        if (currentInput.equals("y")) {
+            if (anyTimerRunning) {
+                System.out.println("Ending timers before saving.");
+                endAllTimers();
+            }
+            saveCurrentListOfText();
+        } else {
+            System.out.println("Thanks for using the Reading Timer App.");
+        }
     }
 
     // EFFECTS: displays the current texts
@@ -252,7 +286,7 @@ public class ReadingTimerApp {
                 return NonFictionGenre.SELF_HELP;
             }
             case (5): {
-                return NonFictionGenre.OTHER;
+                return NonFictionGenre.NF_OTHER;
             }
         }
         throw new InvalidEntryException();
@@ -474,5 +508,52 @@ public class ReadingTimerApp {
             throw new InvalidEntryException();
         }
         System.out.println(texts.calcReadingTime(g, wordCount));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: tries to save the current text data as a json file
+    private void saveCurrentListOfText() {
+        try {
+            writeJson.start();
+            writeJson.writeFile(texts);
+            writeJson.close();
+            System.out.println("Your data has been saved.");
+        } catch (IOException e) {
+            System.out.print("An error occurred attempting to save your data.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: tries to load previously stored data
+    private void loadListOfText() {
+        try {
+            texts = readJson.read();
+            System.out.println("Successfully loaded previous data.");
+        } catch (IOException e) {
+            System.out.println("An error occurred while loading previous data.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: checks if there is any running timer
+    private boolean anyRunningTimer() {
+        boolean anyTimerRunning = false;
+        for (Text t : texts.getTexts()) {
+            if (t.getTimerStatus()) {
+                anyTimerRunning = true;
+                break;
+            }
+        }
+        return anyTimerRunning;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: ends the timer on all texts with running timers
+    private void endAllTimers() {
+        for (Text t: texts.getTexts()) {
+            if (t.getTimerStatus()) {
+                t.endTimer();
+            }
+        }
     }
 }

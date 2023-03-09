@@ -11,6 +11,6 @@ public class NonFictionGenreTest {
         assertEquals("Textbook or other educational book", NonFictionGenre.TEXTBOOK.getGenreDescription());
         assertEquals("Memoir, biography, or autobiography", NonFictionGenre.MEMOIR.getGenreDescription());
         assertEquals("Self-help book", NonFictionGenre.SELF_HELP.getGenreDescription());
-        assertEquals("Any other non-fiction material", NonFictionGenre.OTHER.getGenreDescription());
+        assertEquals("Any other non-fiction material", NonFictionGenre.NF_OTHER.getGenreDescription());
     }
 }
