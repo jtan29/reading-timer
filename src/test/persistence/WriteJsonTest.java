@@ -46,10 +46,12 @@ public class WriteJsonTest {
         ListOfText texts = new ListOfText();
         Text t1 = new Text(1000, "Test", FictionGenre.YA);
         Text t2 = new Text(2000, "Another Test", NonFictionGenre.MEMOIR);
+        Text t3 = new Text(3000, "I should have made less genres", FictionGenre.SHORT_STORY);
         t2.setIsComplete(true);
         t2.addTime(10000);
         texts.addText(t1);
         texts.addText(t2);
+        texts.addText(t3);
         WriteJson writer = new WriteJson("./data/testListOfTextsWithTexts");
         try {
             writer.start();
@@ -57,19 +59,24 @@ public class WriteJsonTest {
             writer.close();
             ReadJson reader = new ReadJson("./data/testListOfTextsWithTexts");
             texts = reader.read();
-            assertEquals(2, texts.getNumOfTexts());
+            assertEquals(3, texts.getNumOfTexts());
             Text tt1 = texts.getTextAt(0);
             Text tt2 = texts.getTextAt(1);
+            Text tt3 = texts.getTextAt(2);
             assertEquals("Test", tt1.getTitle());
             assertEquals("Another Test", tt2.getTitle());
             assertEquals(1000, tt1.getWordCount());
             assertEquals(2000, tt2.getWordCount());
+            assertEquals(3000, tt3.getWordCount());
             assertEquals(FictionGenre.YA, tt1.getGenre());
             assertEquals(NonFictionGenre.MEMOIR, tt2.getGenre());
+            assertEquals(FictionGenre.SHORT_STORY, tt3.getGenre());
             assertFalse(tt1.getIsComplete());
             assertTrue(tt2.getIsComplete());
+            assertFalse(tt3.getIsComplete());
             assertEquals(0, tt1.getElapsedTime());
             assertEquals(10000, tt2.getElapsedTime());
+            assertEquals(0, tt3.getElapsedTime());
         } catch (IOException e) {
             fail("should pass");
         }
