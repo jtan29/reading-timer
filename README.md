@@ -46,3 +46,7 @@ from selected previously completed texts.
 - As a user, I want to be able to save my texts, with their word counts, genres, and recorded times, to a file
 - As a user, I want to be able to load my texts (with their details) from a file when launching the app, allowing
 recording to resume
+
+## Citations
+
+- Parts of the persistence package are sourced from the JsonSerialization demo

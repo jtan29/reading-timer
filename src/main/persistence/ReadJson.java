@@ -94,6 +94,7 @@ public class ReadJson {
         }
     }
 
+    // EFFECTS: helper to convert non-fiction genres
     private Genre convertGenreHelper(String s) {
         switch (s) {
             case ("ARTICLE"): {
