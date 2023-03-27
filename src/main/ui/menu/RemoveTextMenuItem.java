@@ -1,4 +1,6 @@
-package ui;
+package ui.menu;
+
+import ui.ReadingTimerAppGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -8,6 +10,7 @@ public class RemoveTextMenuItem extends MenuItem {
 
     public RemoveTextMenuItem(ReadingTimerAppGUI frame, JComponent parent) {
         super("Remove Selected Text", frame, parent);
+        addListener();
     }
 
     public void addListener() {

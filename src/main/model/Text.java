@@ -2,7 +2,7 @@ package model;
 
 import java.time.Duration;
 import java.time.Instant;
-import org.json.JSONArray;
+
 import org.json.JSONObject;
 import persistence.ToWrite;
 
@@ -76,18 +76,7 @@ public class Text implements ToWrite {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: changes the text's title
-    public void editTitle(String newTitle) {
-        this.title = newTitle;
-    }
 
-    // REQUIRES: newWordCount >= 0
-    // MODIFIES: this
-    // EFFECTS: changes the text's word count
-    public void editWordCount(int newWordCount) {
-        this.wordCount = newWordCount;
-    }
 
     // EFFECTS: calculates a day/hours/minutes/seconds statement for the elapsed time
     public String calcTimeStatement() {
@@ -128,6 +117,23 @@ public class Text implements ToWrite {
 
     public void setIsComplete(boolean b) {
         this.isComplete = b;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes the text's title
+    public void setTitle(String newTitle) {
+        this.title = newTitle;
+    }
+
+    // REQUIRES: newWordCount >= 0
+    // MODIFIES: this
+    // EFFECTS: changes the text's word count
+    public void setWordCount(int newWordCount) {
+        this.wordCount = newWordCount;
+    }
+
+    public void setGenre(Genre g) {
+        this.genre = g;
     }
 
     public boolean getIsComplete() {

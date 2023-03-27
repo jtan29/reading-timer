@@ -1,6 +1,7 @@
-package ui;
+package ui.buttons;
 
 import model.Text;
+import ui.ReadingTimerAppGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,8 +18,13 @@ public class TextButton {
         button = new JButton(t.getTitle());
         button.setVisible(true);
         parent.add(button);
+        button.setFocusable(false);
         button.addActionListener(new TextButtonActionHandler());
 
+    }
+
+    public JButton getButton() {
+        return button;
     }
 
     private class TextButtonActionHandler implements ActionListener {

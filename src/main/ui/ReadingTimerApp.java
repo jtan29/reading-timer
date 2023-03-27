@@ -393,7 +393,7 @@ public class ReadingTimerApp {
         selectText();
         System.out.println("Enter the new title for this text:");
         String newTitle = input.next();
-        selectedText.editTitle(newTitle);
+        selectedText.setTitle(newTitle);
 
     }
 
@@ -411,7 +411,7 @@ public class ReadingTimerApp {
         if (newWordCount < 0) {
             throw new InvalidEntryException();
         }
-        selectedText.editWordCount(newWordCount);
+        selectedText.setWordCount(newWordCount);
     }
 
     // MODIFIES: this

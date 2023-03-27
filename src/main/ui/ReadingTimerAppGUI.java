@@ -1,19 +1,25 @@
 package ui;
 
-import model.ListOfText;
-import model.Text;
-import persistence.ReadJson;
-import persistence.WriteJson;
+import model.*;
+import ui.buttons.AddTextTitleButton;
+import ui.buttons.DataLoader;
+import ui.buttons.TextButton;
+import ui.menu.AddTextMenuItem;
+import ui.menu.EndTimer;
+import ui.menu.RemoveTextMenuItem;
+import ui.menu.StartTimer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ReadingTimerAppGUI extends JFrame {
     private ListOfText texts;
+    private List<JButton> buttonList;
     private Text selectedText;
+    private JButton selectedButton;
     private JTextArea textArea;
     private JPanel textPanel;
     private JPanel displayPanel;
@@ -29,6 +35,8 @@ public class ReadingTimerAppGUI extends JFrame {
     private void setUp() {
         texts = new ListOfText();
         selectedText = null;
+        selectedButton = null;
+        buttonList = new ArrayList<JButton>();
         textPanel = new JPanel();
         displayPanel = new JPanel();
         setUpGraphics();
@@ -49,12 +57,12 @@ public class ReadingTimerAppGUI extends JFrame {
         displayPanel = new JPanel();
         displayPanel.setBackground(Color.red);
         displayPanel.setBounds(200, 200, 200, 200);
-        textArea = new JTextArea(5, 20);
-        textArea.setText("Test");
-        displayPanel.setVisible(true);
-        displayPanel.add(textArea);
         add(displayPanel, BorderLayout.CENTER);
+        textArea = new JTextArea(5, 20);
+        displayPanel.add(textArea);
         textArea.setEditable(false);
+        textArea.setText("No Text Selected");
+        displayPanel.setVisible(true);
     }
 
     private void setUpMenu() {
@@ -63,6 +71,7 @@ public class ReadingTimerAppGUI extends JFrame {
         JMenu menuManage = new JMenu("Manage Texts");
         JMenu menuTimer = new JMenu("Manage Timer");
         RemoveTextMenuItem removeTextMenuItem = new RemoveTextMenuItem(this, menuManage);
+        AddTextMenuItem addTextMenuItem = new AddTextMenuItem(this, menuManage);
         StartTimer startTimer = new StartTimer(this, menuTimer);
         EndTimer endTimer = new EndTimer(this, menuTimer);
         menuBar.add(menuManage);
@@ -71,20 +80,22 @@ public class ReadingTimerAppGUI extends JFrame {
 
     private void loadData() {
         JPanel dataPanel = new JPanel();
-        dataPanel.setLayout(new GridLayout(0,1));
+        dataPanel.setLayout(new GridLayout(0, 1));
         dataPanel.setSize(new Dimension(0, 0));
         dataPanel.setBounds(0, 0, 300, 200);
         add(dataPanel, BorderLayout.CENTER);
         DataLoader dataLoader = new DataLoader(this, dataPanel);
     }
 
-    public void addTexts(ListOfText texts) {
-        textPanel.setLayout(new GridLayout(4,2));
+    public void initializeTexts(ListOfText texts) {
+        this.texts = texts;
+        textPanel.setLayout(new GridLayout(4, 2));
         textPanel.setSize(new Dimension(0, 0));
         textPanel.setBackground(Color.blue);
         add(textPanel, BorderLayout.SOUTH);
         for (Text t : texts.getTexts()) {
             TextButton textButton = new TextButton(t, this, textPanel);
+            buttonList.add(textButton.getButton());
         }
     }
 
@@ -98,13 +109,37 @@ public class ReadingTimerAppGUI extends JFrame {
 
     public void removeText() {
         texts.removeText(selectedText);
-        textPanel.removeAll();
-        addTexts(texts);
+        selectedText = null;
+        textPanel.remove(selectedButton);
+        buttonList.remove(selectedButton);
+        selectedButton = null;
+    }
+
+    public void addTextShowOptions() {
+        Text newText = new Text(0,"Placeholder", NonFictionGenre.NF_OTHER);
+        JPanel addPanel = new JPanel();
+        addPanel.setBackground(Color.green);
+        addPanel.setBounds(500, 0, 200, 400);
+        addPanel.setLayout(new FlowLayout());
+        add(addPanel, BorderLayout.NORTH);
+        AddTextTitleButton addTextTitleButton = new AddTextTitleButton(newText, this, addPanel);
+    }
+
+    public void addText(Text text) {
+        texts.addText(text);
+        TextButton textButton = new TextButton(text, this, textPanel);
+        buttonList.add(textButton.getButton());
     }
 
     public void setSelectedText(Text t) {
         this.selectedText = t;
-        textArea.setText("Selected: " + t.getTitle());
+        int index = texts.getTexts().indexOf(selectedText);
+        selectedButton = buttonList.get(index);
+        textArea.setText("Selected: " + t.getTitle() + "\n" + "Elapsed Time: " + t.calcTimeStatement() + "\n"
+                + "Genre: " + t.getGenre().getGenreDescription() + "\n"
+                + "Words: " + t.getWordCount() + "\n"
+                + "Complete: " + t.getIsComplete());
+
     }
 
     public void setTextArea(String string) {

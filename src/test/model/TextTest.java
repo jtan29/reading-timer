@@ -28,18 +28,18 @@ public class TextTest {
 
     @Test
     public void testEditTitle() {
-        tt1.editTitle("New Title");
+        tt1.setTitle("New Title");
         assertEquals("New Title", tt1.getTitle());
-        tt2.editTitle("Another New Title");
+        tt2.setTitle("Another New Title");
         assertEquals("Another New Title", tt2.getTitle());
 
     }
 
     @Test
     public void testEditWordCount() {
-        tt1.editWordCount(2000);
+        tt1.setWordCount(2000);
         assertEquals(2000, tt1.getWordCount());
-        tt2.editWordCount(7000);
+        tt2.setWordCount(7000);
         assertEquals(7000, tt2.getWordCount());
     }
 
