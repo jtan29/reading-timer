@@ -24,10 +24,10 @@ public class AddTextTitleButton {
         textField.setPreferredSize(new Dimension(250, 40));
         parent.add(textField);
         button = new JButton("Submit title");
+        button.addActionListener(new AddTextHandler());
         button.setVisible(true);
         button.setFocusable(false);
         parent.add(button);
-        button.addActionListener(new AddTextHandler());
     }
 
     private class AddTextHandler implements ActionListener {
@@ -36,13 +36,13 @@ public class AddTextTitleButton {
         public void actionPerformed(ActionEvent e) {
             incompleteText.setTitle(textField.getText());
             textField.setText("");
-            parent.remove(button);
             button.setVisible(false);
+            parent.remove(button);
             otherButton = new JButton("Submit word count");
+            otherButton.addActionListener(new OtherButtonHandler());
             otherButton.setVisible(true);
             otherButton.setFocusable(false);
             parent.add(otherButton);
-            otherButton.addActionListener(new OtherButtonHandler());
         }
 
 
@@ -56,10 +56,10 @@ public class AddTextTitleButton {
                     newWordCount = 100;
                 }
                 incompleteText.setWordCount(newWordCount);
-                parent.remove(otherButton);
                 otherButton.setVisible(false);
-                parent.remove(textField);
+                parent.remove(otherButton);
                 textField.setVisible(false);
+                parent.remove(textField);
                 SelectGenreButtonList selectGenreButtonList = new SelectGenreButtonList(incompleteText, frame, parent);
             }
         }

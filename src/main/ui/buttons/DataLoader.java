@@ -41,25 +41,21 @@ public class DataLoader {
             try {
                 texts = readJson.read();
             } catch (IOException exception) {
-                System.out.println("An error occurred.");
+                frame.setTextArea("There was an issue reading your saved data.");
             }
             frame.initializeTexts(texts);
             load.setVisible(false);
             skip.setVisible(false);
-            parent.remove(load);
             frame.remove(parent);
         }
     }
 
     private class SkipActionHandler implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent e2) {
             frame.initializeTexts(new ListOfText());
             load.setVisible(false);
             skip.setVisible(false);
-            parent.remove(load);
-            parent.remove(skip);
             frame.remove(parent);
         }
     }

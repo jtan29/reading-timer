@@ -43,8 +43,8 @@ public class SelectGenreButtonList {
 
     public void removeAllButtons() {
         for (JButton button : buttonList) {
-            parent.remove(button);
             button.setVisible(false);
+            parent.remove(button);
             frame.remove(parent);
         }
     }
@@ -55,6 +55,10 @@ public class SelectGenreButtonList {
             for (Genre genre : NonFictionGenre.values()) {
                 addNewButton(genre);
             }
+            nonFiction.setVisible(false);
+            fiction.setVisible(false);
+            parent.remove(nonFiction);
+            parent.remove(fiction);
         }
     }
 
@@ -64,6 +68,10 @@ public class SelectGenreButtonList {
             for (Genre genre : FictionGenre.values()) {
                 addNewButton(genre);
             }
+            nonFiction.setVisible(false);
+            fiction.setVisible(false);
+            parent.remove(nonFiction);
+            parent.remove(fiction);
         }
     }
 

@@ -21,8 +21,16 @@ public class EndTimer extends MenuItem {
     private class EndTimerActionHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-           // frame.endTimer();
-            frame.setTextArea("Ending Timer...");
+            if (frame.getSelectedText() == null) {
+                frame.setTextArea("No text selected, try again.");
+            } else {
+                if (frame.getSelectedText().getTimerStatus()) {
+                    frame.setTextArea("Ending timer...");
+                    frame.endTimer();
+                } else {
+                    frame.setTextArea("No timer running for selected text.");
+                }
+            }
         }
     }
 }

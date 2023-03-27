@@ -21,8 +21,16 @@ public class StartTimer extends MenuItem {
     private class StartTimerActionHandler implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // frame.startTimer();
-            frame.setTextArea("Starting timer!");
+            if (frame.getSelectedText() == null) {
+                frame.setTextArea("No text selected, try again");
+            } else {
+                if (frame.getSelectedText().getTimerStatus()) {
+                    frame.setTextArea("Timer already running.");
+                } else {
+                    frame.startTimer();
+                    frame.setTextArea("Starting timer!");
+                }
+            }
         }
     }
 }

@@ -55,13 +55,13 @@ public class ReadingTimerAppGUI extends JFrame {
 
     private void setUpTextBox() {
         displayPanel = new JPanel();
-        displayPanel.setBackground(Color.red);
+     //   displayPanel.setBackground(Color.red);
         displayPanel.setBounds(200, 200, 200, 200);
         add(displayPanel, BorderLayout.CENTER);
-        textArea = new JTextArea(5, 20);
+        textArea = new JTextArea(10, 30);
         displayPanel.add(textArea);
         textArea.setEditable(false);
-        textArea.setText("No Text Selected");
+        textArea.setText("No text selected");
         displayPanel.setVisible(true);
     }
 
@@ -80,10 +80,10 @@ public class ReadingTimerAppGUI extends JFrame {
 
     private void loadData() {
         JPanel dataPanel = new JPanel();
-        dataPanel.setLayout(new GridLayout(0, 1));
+        dataPanel.setLayout(new GridLayout(2, 1));
         dataPanel.setSize(new Dimension(0, 0));
-        dataPanel.setBounds(0, 0, 300, 200);
-        add(dataPanel, BorderLayout.CENTER);
+     //   dataPanel.setBounds(0, 0, 300, 200);
+        add(dataPanel, BorderLayout.NORTH);
         DataLoader dataLoader = new DataLoader(this, dataPanel);
     }
 
@@ -91,7 +91,7 @@ public class ReadingTimerAppGUI extends JFrame {
         this.texts = texts;
         textPanel.setLayout(new GridLayout(4, 2));
         textPanel.setSize(new Dimension(0, 0));
-        textPanel.setBackground(Color.blue);
+    //    textPanel.setBackground(Color.blue);
         add(textPanel, BorderLayout.SOUTH);
         for (Text t : texts.getTexts()) {
             TextButton textButton = new TextButton(t, this, textPanel);
@@ -108,18 +108,20 @@ public class ReadingTimerAppGUI extends JFrame {
     }
 
     public void removeText() {
-        texts.removeText(selectedText);
-        selectedText = null;
-        textPanel.remove(selectedButton);
-        buttonList.remove(selectedButton);
-        selectedButton = null;
+        if (selectedText != null) {
+            texts.removeText(selectedText);
+            selectedText = null;
+            textPanel.remove(selectedButton);
+            buttonList.remove(selectedButton);
+            selectedButton = null;
+        }
     }
 
     public void addTextShowOptions() {
         Text newText = new Text(0,"Placeholder", NonFictionGenre.NF_OTHER);
         JPanel addPanel = new JPanel();
-        addPanel.setBackground(Color.green);
-        addPanel.setBounds(500, 0, 200, 400);
+    //    addPanel.setBackground(Color.green);
+        addPanel.setBounds(200, 100, 200, 400);
         addPanel.setLayout(new FlowLayout());
         add(addPanel, BorderLayout.NORTH);
         AddTextTitleButton addTextTitleButton = new AddTextTitleButton(newText, this, addPanel);
@@ -144,5 +146,9 @@ public class ReadingTimerAppGUI extends JFrame {
 
     public void setTextArea(String string) {
         textArea.setText(string);
+    }
+
+    public Text getSelectedText() {
+        return selectedText;
     }
 }
