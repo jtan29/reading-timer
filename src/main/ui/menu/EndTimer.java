@@ -1,5 +1,6 @@
 package ui.menu;
 
+import model.Text;
 import ui.ReadingTimerAppGUI;
 
 import javax.swing.*;
@@ -27,6 +28,16 @@ public class EndTimer extends MenuItem {
                 if (frame.getSelectedText().getTimerStatus()) {
                     frame.setTextArea("Ending timer...");
                     frame.endTimer();
+                    String newString = "Timer running for: ";
+                    for (Text t : frame.getTexts().getTexts()) {
+                        if (t.getTimerStatus()) {
+                            newString = newString + t.getTitle() + ", ";
+                        }
+                    }
+                    frame.setLabelText(newString);
+                    if (!frame.anyRunningTimer()) {
+                        frame.setTimerIconNotVisible();
+                    }
                 } else {
                     frame.setTextArea("No timer running for selected text.");
                 }

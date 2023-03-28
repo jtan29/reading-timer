@@ -1,5 +1,6 @@
 package ui.menu;
 
+import model.Text;
 import ui.ReadingTimerAppGUI;
 
 import javax.swing.*;
@@ -24,10 +25,18 @@ public class StartTimer extends MenuItem {
             if (frame.getSelectedText() == null) {
                 frame.setTextArea("No text selected, try again");
             } else {
-                if (frame.getSelectedText().getTimerStatus()) {
-                    frame.setTextArea("Timer already running.");
+                if (frame.getSelectedText().getTimerStatus() || frame.getSelectedText().getIsComplete()) {
+                    frame.setTextArea("This action is not supported for the selected text.");
                 } else {
                     frame.startTimer();
+                    String newString = "Timer running for: ";
+                    for (Text t : frame.getTexts().getTexts()) {
+                        if (t.getTimerStatus()) {
+                            newString = newString + t.getTitle() + ", ";
+                        }
+                    }
+                    frame.setLabelText(newString);
+                    frame.setTimerIconVisible();
                     frame.setTextArea("Starting timer!");
                 }
             }

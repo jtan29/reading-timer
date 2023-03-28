@@ -13,6 +13,7 @@ public class AddTextMenuItem extends MenuItem {
         addListener();
     }
 
+    @Override
     public void addListener() {
         this.menuItem.addActionListener(new AddActionHandler());
     }
