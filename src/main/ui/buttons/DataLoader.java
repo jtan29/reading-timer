@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+// Representation of buttons to manage loading saved data
 public class DataLoader {
     private ReadJson readJson;
     private static final String FILE_PATH = "./data/ListOfText.json";
@@ -18,6 +19,8 @@ public class DataLoader {
     private ListOfText texts;
     private JComponent parent;
 
+    // MODIFIES: this
+    // EFFECTS: creates a new DataLoader
     public DataLoader(ReadingTimerAppGUI frame, JComponent parent) {
         this.frame = frame;
         this.parent = parent;
@@ -34,9 +37,13 @@ public class DataLoader {
         skip.addActionListener(new SkipActionHandler());
     }
 
+    // the action listener for the button to load saved data
     private class DataLoaderActionHandler implements ActionListener {
 
         @Override
+
+        // MODIFIES: this
+        // EFFECTS: tries to read previously saved data and informs the user
         public void actionPerformed(ActionEvent e) {
             try {
                 texts = readJson.read();
@@ -50,7 +57,11 @@ public class DataLoader {
         }
     }
 
+    // the action listener for the button to skip loading data
     private class SkipActionHandler implements ActionListener {
+
+        // MODIFIES: this
+        // EFFECTS: initializes with no saved Texts
         @Override
         public void actionPerformed(ActionEvent e2) {
             frame.initializeTexts(new ListOfText());

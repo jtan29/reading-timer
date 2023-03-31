@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Representation of the option to input Text information
 public class AddTextTitleButton {
     private JButton button;
     private JButton otherButton;
@@ -16,6 +17,8 @@ public class AddTextTitleButton {
     private JTextField textField;
     private JComponent parent;
 
+    // MODIFIES: this
+    // EFFECTS: creates a new AddTextTitleButton
     public AddTextTitleButton(Text t, ReadingTimerAppGUI frame, JComponent parent) {
         this.incompleteText = t;
         this.frame = frame;
@@ -32,9 +35,14 @@ public class AddTextTitleButton {
         parent.revalidate();
     }
 
+   // the action listener for the title submit button
     private class AddTextHandler implements ActionListener {
 
         @Override
+
+        // MODIFIES: this
+        // EFFECTS: sets the Text to be added to have the title entered in the text field,
+        //          and sets up the text field to take the word count
         public void actionPerformed(ActionEvent e) {
             incompleteText.setTitle(textField.getText());
             textField.setText("");
@@ -48,8 +56,12 @@ public class AddTextTitleButton {
         }
 
 
+        // the action listener for the word count submit button
         private class OtherButtonHandler implements ActionListener {
             @Override
+
+            // MODIFIES: this
+            // EFFECTS: sets the text to be added to have the given word count and sets up genre selection buttons
             public void actionPerformed(ActionEvent e) {
                 int newWordCount;
                 try {

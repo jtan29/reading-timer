@@ -222,6 +222,8 @@ public class ReadingTimerAppGUI extends JFrame {
         return texts;
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes the text on the label on the timer icon
     public void setLabelText(String string) {
         timerIcon.setText(string);
     }

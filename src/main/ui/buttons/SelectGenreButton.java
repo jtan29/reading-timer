@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+// Representation for genre selection buttons
 public class SelectGenreButton {
     private Genre genre;
     private JButton button;
@@ -17,6 +19,8 @@ public class SelectGenreButton {
     private Text incompleteText;
     private SelectGenreButtonList buttonList;
 
+    // MODIFIES: this
+    // EFFECTS: creates a new SelectGenreButton
     public SelectGenreButton(SelectGenreButtonList buttonList, Text incompleteText,
                              Genre g, ReadingTimerAppGUI frame, JComponent parent) {
         this.genre = g;
@@ -31,12 +35,17 @@ public class SelectGenreButton {
 
     }
 
+
     public JButton getButton() {
         return this.button;
     }
 
+    // the action listener for the button representing a genre
     private class SelectGenreButtonActionListener implements ActionListener {
         @Override
+
+        // MODIFIES: this
+        // EFFECTS: sets the text to be added to have the genre associated with this button, and hides all the buttons
         public void actionPerformed(ActionEvent e) {
             incompleteText.setGenre(genre);
             frame.addText(incompleteText);

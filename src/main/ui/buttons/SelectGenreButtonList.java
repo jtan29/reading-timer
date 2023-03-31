@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+// Representation for all the buttons representing genres to be selected
 public class SelectGenreButtonList {
     private List<JButton> buttonList;
     private Text incompleteText;
@@ -20,6 +21,8 @@ public class SelectGenreButtonList {
     private JButton nonFiction;
     private JButton fiction;
 
+    // MODIFIES: this
+    // EFFECTS: creates a new SelectGenreButtonList
     public SelectGenreButtonList(Text incompleteText, ReadingTimerAppGUI frame, JComponent parent) {
         this.frame = frame;
         this.incompleteText = incompleteText;
@@ -35,12 +38,17 @@ public class SelectGenreButtonList {
         fiction.addActionListener(new FictionActionHandler());
     }
 
+    // MODIFIES: this
+    // EFFECTS: makes a new SelectGenreButton and adds the corresponding button to the list
     public void addNewButton(Genre genre) {
         SelectGenreButton selectGenreButton = new SelectGenreButton(this, incompleteText, genre,
                 frame, parent);
         buttonList.add(selectGenreButton.getButton());
     }
 
+
+    // MODIFIES: this
+    // EFFECTS: hides all buttons
     public void removeAllButtons() {
         for (JButton button : buttonList) {
             button.setVisible(false);
@@ -49,8 +57,12 @@ public class SelectGenreButtonList {
         }
     }
 
+    // the action listener for the NonFiction button
     private class NonFictionActionHandler implements ActionListener {
         @Override
+
+        // MODIFIES: this
+        // EFFECTS: displays all the NonFiction genres as buttons to select
         public void actionPerformed(ActionEvent e) {
             for (Genre genre : NonFictionGenre.values()) {
                 addNewButton(genre);
@@ -62,8 +74,12 @@ public class SelectGenreButtonList {
         }
     }
 
+    // the action listener for the Fiction button
     private class FictionActionHandler implements ActionListener {
         @Override
+
+        // MODIFIES: this
+        // EFFECTS: displays all the Fiction genres as buttons to select
         public void actionPerformed(ActionEvent e) {
             for (Genre genre : FictionGenre.values()) {
                 addNewButton(genre);

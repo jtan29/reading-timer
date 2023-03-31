@@ -17,5 +17,7 @@ public abstract class MenuItem {
         parent.add(menuItem);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds an action listener
     public abstract void addListener();
 }
