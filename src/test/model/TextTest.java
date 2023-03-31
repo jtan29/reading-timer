@@ -134,4 +134,11 @@ public class TextTest {
         assertEquals("{\"wordCount\":5000,\"genre\":\"MEMOIR\",\"title\":\"Another Test\",\"isComplete\":false," +
                 "\"elapsedTime\":0}", result2);
     }
+
+    @Test
+    public void testSetGenre() {
+        assertEquals(FictionGenre.GRAPHIC, tt1.getGenre());
+        tt1.setGenre(FictionGenre.CHILDREN);
+        assertEquals(FictionGenre.CHILDREN, tt1.getGenre());
+    }
 }
