@@ -13,7 +13,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// The graphical interface for the reading timer
 public class ReadingTimerAppGUI extends JFrame {
     private ListOfText texts;
     private List<JButton> buttonList;
@@ -24,15 +24,9 @@ public class ReadingTimerAppGUI extends JFrame {
     private JPanel displayPanel;
     private JLabel timerIcon;
 
+    // MODIFIES: this
+    // EFFECTS: creates a new ReadingTimerAppGUI
     public ReadingTimerAppGUI() {
-        run();
-    }
-
-    private void run() {
-        setUp();
-    }
-
-    private void setUp() {
         texts = new ListOfText();
         selectedText = null;
         selectedButton = null;
@@ -44,6 +38,8 @@ public class ReadingTimerAppGUI extends JFrame {
         setUpTextBox();
     }
 
+    // MODIFIES: this
+    // EFFECTS: helper to set up GUI graphics
     private void setUpGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(1000, 500));
@@ -53,6 +49,8 @@ public class ReadingTimerAppGUI extends JFrame {
         loadData();
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up the central text area to display information
     private void setUpTextBox() {
         displayPanel = new JPanel();
         // displayPanel.setBackground(Color.red);
@@ -74,6 +72,8 @@ public class ReadingTimerAppGUI extends JFrame {
         timerIcon.setVisible(false);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up the menu bar and menu items
     private void setUpMenu() {
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
@@ -89,15 +89,19 @@ public class ReadingTimerAppGUI extends JFrame {
         menuBar.add(menuTimer);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up buttons to manage loading data when starting the GUI
     private void loadData() {
         JPanel dataPanel = new JPanel();
         dataPanel.setLayout(new GridLayout(2, 1));
         dataPanel.setSize(new Dimension(0, 0));
         //   dataPanel.setBounds(0, 0, 300, 200);
-        add(dataPanel, BorderLayout.NORTH);
+        add(dataPanel, BorderLayout.SOUTH);
         DataLoader dataLoader = new DataLoader(this, dataPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up Texts when previous data is loaded in
     public void initializeTexts(ListOfText texts) {
         this.texts = texts;
         textPanel.setLayout(new GridLayout(4, 2));
@@ -111,14 +115,21 @@ public class ReadingTimerAppGUI extends JFrame {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: starts the timer on the selected text
     public void startTimer() {
         selectedText.startTimer();
     }
 
+    // MODIFIES: this
+    // EFFECTS: ends the timer on the selected text
     public void endTimer() {
         selectedText.endTimer();
     }
 
+
+    // MODIFIES: this
+    // EFFECTS: removes the selected text
     public void removeText() {
         if (selectedText != null) {
             texts.removeText(selectedText);
@@ -130,6 +141,8 @@ public class ReadingTimerAppGUI extends JFrame {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays new graphical options for adding a new Text
     public void addTextShowOptions() {
         Text newText = new Text(0, "Placeholder", NonFictionGenre.NF_OTHER);
         JPanel addPanel = new JPanel();
@@ -141,12 +154,16 @@ public class ReadingTimerAppGUI extends JFrame {
         AddTextTitleButton addTextTitleButton = new AddTextTitleButton(newText, this, addPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets up a new button representing a Text
     public void addText(Text text) {
         texts.addText(text);
         TextButton textButton = new TextButton(text, this, textPanel);
         buttonList.add(textButton.getButton());
     }
 
+    // MODIFIES: this
+    // EFFECTS: switches selection to a new selected text and displays its information
     public void setSelectedText(Text t) {
         this.selectedText = t;
         int index = texts.getTexts().indexOf(selectedText);
@@ -165,10 +182,14 @@ public class ReadingTimerAppGUI extends JFrame {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: displays the timer icon when timer is running
     public void setTimerIconVisible() {
         this.timerIcon.setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: hides the timer icon when timer is no longer running for any texts
     public void setTimerIconNotVisible() {
         this.timerIcon.setVisible(false);
     }
@@ -187,6 +208,8 @@ public class ReadingTimerAppGUI extends JFrame {
         return anyTimerRunning;
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes the text being displayed
     public void setTextArea(String string) {
         textArea.setText(string);
     }
@@ -197,10 +220,6 @@ public class ReadingTimerAppGUI extends JFrame {
 
     public ListOfText getTexts() {
         return texts;
-    }
-
-    public String getLabelText() {
-        return timerIcon.getText();
     }
 
     public void setLabelText(String string) {
