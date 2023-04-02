@@ -22,12 +22,14 @@ public class ListOfText implements ToWrite {
     // EFFECTS: adds the Text to the list of texts
     public void addText(Text t) {
         texts.add(t);
+        EventLog.getInstance().logEvent(new Event("Added " + t.getTitle() + " to list."));
     }
 
     // MODIFIES: this
     // EFFECTS: removes the Text from the list of texts
     public void removeText(Text t) {
         texts.remove(t);
+        EventLog.getInstance().logEvent(new Event("Removed " + t.getTitle() + " from list."));
     }
 
     // EFFECTS: returns average reading speed for given genre of texts in list,

@@ -46,6 +46,7 @@ public class Text implements ToWrite {
     public void startTimer() {
         start = Instant.now();
         isTimerRunning = true;
+        EventLog.getInstance().logEvent(new Event("Started timer for " + this.getTitle()));
     }
 
     // REQUIRES: timer is running
@@ -56,6 +57,7 @@ public class Text implements ToWrite {
         isTimerRunning = false;
         Duration duration = Duration.between(start, end);
         elapsedTime += (duration.toMillis() / MILLISECONDS_PER_SECOND);
+        EventLog.getInstance().logEvent(new Event("Ended timer for " + this.getTitle()));
     }
 
     // REQUIRES: given time interval is not negative
@@ -75,7 +77,6 @@ public class Text implements ToWrite {
             elapsedTime = elapsedTime - time;
         }
     }
-
 
 
     // EFFECTS: calculates a day/hours/minutes/seconds statement for the elapsed time
@@ -122,6 +123,7 @@ public class Text implements ToWrite {
     // MODIFIES: this
     // EFFECTS: changes the text's title
     public void setTitle(String newTitle) {
+        EventLog.getInstance().logEvent(new Event("Changed title of " + this.title + " to " + newTitle + "."));
         this.title = newTitle;
     }
 
@@ -129,10 +131,14 @@ public class Text implements ToWrite {
     // MODIFIES: this
     // EFFECTS: changes the text's word count
     public void setWordCount(int newWordCount) {
+        EventLog.getInstance().logEvent(new Event("Changed word count for " + this.getTitle() + " from "
+                + this.getWordCount() + " to " + newWordCount));
         this.wordCount = newWordCount;
     }
 
     public void setGenre(Genre g) {
+        EventLog.getInstance().logEvent(new Event("Changed genre for " + this.getTitle() + " from \""
+                + this.getGenre().getGenreDescription() + "\" to " + "\"" + g.getGenreDescription() + "\"."));
         this.genre = g;
     }
 

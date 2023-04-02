@@ -1,5 +1,6 @@
 package ui;
 
+import model.EventLog;
 import model.ListOfText;
 import model.NonFictionGenre;
 import model.Text;
@@ -10,6 +11,10 @@ import ui.menu.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +48,8 @@ public class ReadingTimerAppGUI extends JFrame {
     private void setUpGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(1000, 500));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ShowLogOnClose showLogOnClose = new ShowLogOnClose(this);
+       // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
         loadData();
@@ -227,4 +233,6 @@ public class ReadingTimerAppGUI extends JFrame {
     public void setLabelText(String string) {
         timerIcon.setText(string);
     }
+
+
 }

@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.ListOfText;
 import org.json.JSONObject;
 
@@ -27,6 +29,7 @@ public class WriteJson {
     // MODIFIES: this
     // EFFECTS: writes the information from the given ListOfText to the Json file
     public void writeFile(ListOfText txt) {
+        EventLog.getInstance().logEvent(new Event("Saved data."));
         JSONObject json = txt.toJson();
         saveFile(json.toString());
 

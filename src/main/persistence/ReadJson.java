@@ -23,6 +23,7 @@ public class ReadJson {
     // MODIFIES: this
     // EFFECTS: reads the ListOfText from the file
     public ListOfText read() throws IOException {
+        EventLog.getInstance().logEvent(new Event("Loaded data."));
         String data = readFile(file);
         JSONObject json = new JSONObject(data);
         return parse(json); // stub
