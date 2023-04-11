@@ -23,11 +23,11 @@ public class AddTextMenuItem extends MenuItem {
     // MODIFIES: this
     // EFFECTS: adds an action listener to the menu item
     public void addListener() {
-        this.menuItem.addActionListener(new AddActionHandler());
+        this.menuItem.addActionListener(new AddTextActionListener());
     }
 
     // The action listener for AddTextMenuItem
-    private class AddActionHandler implements ActionListener {
+    private class AddTextActionListener implements ActionListener {
         @Override
 
         // MODIFIES: this

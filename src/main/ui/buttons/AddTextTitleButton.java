@@ -28,7 +28,7 @@ public class AddTextTitleButton {
         textField.setPreferredSize(new Dimension(250, 40));
         parent.add(textField);
         button = new JButton("Submit title");
-        button.addActionListener(new AddTextHandler());
+        button.addActionListener(new AddTextButtonActionListener());
         button.setVisible(true);
         button.setFocusable(false);
         parent.add(button);
@@ -36,7 +36,7 @@ public class AddTextTitleButton {
     }
 
    // the action listener for the title submit button
-    private class AddTextHandler implements ActionListener {
+    private class AddTextButtonActionListener implements ActionListener {
 
         @Override
 

@@ -34,8 +34,8 @@ public class SelectGenreButtonList {
         this.parent = parent;
         parent.add(nonFiction);
         parent.add(fiction);
-        nonFiction.addActionListener(new NonFictionActionHandler());
-        fiction.addActionListener(new FictionActionHandler());
+        nonFiction.addActionListener(new NonFictionActionListener());
+        fiction.addActionListener(new FictionActionListener());
     }
 
     // MODIFIES: this
@@ -58,7 +58,7 @@ public class SelectGenreButtonList {
     }
 
     // the action listener for the NonFiction button
-    private class NonFictionActionHandler implements ActionListener {
+    private class NonFictionActionListener implements ActionListener {
         @Override
 
         // MODIFIES: this
@@ -75,7 +75,7 @@ public class SelectGenreButtonList {
     }
 
     // the action listener for the Fiction button
-    private class FictionActionHandler implements ActionListener {
+    private class FictionActionListener implements ActionListener {
         @Override
 
         // MODIFIES: this

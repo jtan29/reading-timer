@@ -33,12 +33,12 @@ public class DataLoader {
         skip.setFocusable(false);
         parent.add(load);
         parent.add(skip);
-        load.addActionListener(new DataLoaderActionHandler());
-        skip.addActionListener(new SkipActionHandler());
+        load.addActionListener(new LoadDataActionListener());
+        skip.addActionListener(new SkipActionListener());
     }
 
     // the action listener for the button to load saved data
-    private class DataLoaderActionHandler implements ActionListener {
+    private class LoadDataActionListener implements ActionListener {
 
         @Override
 
@@ -58,7 +58,7 @@ public class DataLoader {
     }
 
     // the action listener for the button to skip loading data
-    private class SkipActionHandler implements ActionListener {
+    private class SkipActionListener implements ActionListener {
 
         // MODIFIES: this
         // EFFECTS: initializes with no saved Texts

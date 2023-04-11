@@ -22,11 +22,11 @@ public class EndTimer extends MenuItem {
     // MODIFIES: this
     // EFFECTS: adds a new action listener for the EndTimer menu item
     public void addListener() {
-        this.menuItem.addActionListener(new EndTimerActionHandler());
+        this.menuItem.addActionListener(new EndTimerActionListener());
     }
 
     // The action listener for the EndTimer menu item
-    private class EndTimerActionHandler implements ActionListener {
+    private class EndTimerActionListener implements ActionListener {
         @Override
 
         // MODIFIES: this

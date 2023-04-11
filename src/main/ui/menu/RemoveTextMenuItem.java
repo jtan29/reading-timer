@@ -19,11 +19,11 @@ public class RemoveTextMenuItem extends MenuItem {
     // MODIFIES: this
     // EFFECTS: adds a new action listener to the RemoveText menu item
     public void addListener() {
-        this.menuItem.addActionListener(new RemoveActionHandler());
+        this.menuItem.addActionListener(new RemoveTextActionListener());
     }
 
     // The action listener for the RemoveTextMenuItem
-    private class RemoveActionHandler implements ActionListener {
+    private class RemoveTextActionListener implements ActionListener {
         @Override
         // MODIFIES: this
         // EFFECTS: removes the selected text

@@ -20,11 +20,11 @@ public class ToggleComplete extends MenuItem {
     // MODIFIES: this
     // EFFECTS: adds an action listener to the ToggleComplete menu item
     public void addListener() {
-        this.menuItem.addActionListener(new ToggleCompleteActionHandler());
+        this.menuItem.addActionListener(new ToggleCompleteActionListener());
     }
 
     // the action listener for the Toggle Complete menu item
-    private class ToggleCompleteActionHandler implements ActionListener {
+    private class ToggleCompleteActionListener implements ActionListener {
         @Override
 
         // MODIFIES: this

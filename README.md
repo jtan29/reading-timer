@@ -47,6 +47,28 @@ from selected previously completed texts.
 - As a user, I want to be able to load my texts (with their details) from a file when launching the app, allowing
 recording to resume
 
+
+# Phase Four Task 2
+
+```Changed genre for test 5 from "Any other non-fiction material" to "Non-fiction article".
+Fri Apr 07 12:22:20 PDT 2023
+Added test 5 to list.
+Fri Apr 07 12:22:24 PDT 2023
+Started timer for test 5
+Fri Apr 07 12:23:15 PDT 2023
+Ended timer for test 5
+Fri Apr 07 12:23:18 PDT 2023
+Started timer for test 5
+Fri Apr 07 12:23:42 PDT 2023
+Ended timer for test 5
+Fri Apr 07 12:24:03 PDT 2023
+Started timer for test 5
+Fri Apr 07 12:24:34 PDT 2023
+Ended timer for test 5
+Fri Apr 07 12:24:37 PDT 2023
+Marked test 5 as complete.
+```
+
 ## Citations
 
 - Parts of the persistence package are sourced from the JsonSerialization demo

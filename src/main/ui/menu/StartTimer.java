@@ -21,11 +21,11 @@ public class StartTimer extends MenuItem {
     // MODIFIES: this
     // EFFECTS: adds an action listener to the StartTimer action listener
     public void addListener() {
-        this.menuItem.addActionListener(new StartTimerActionHandler());
+        this.menuItem.addActionListener(new StartTimerActionListener());
     }
 
     // The action listener for the StartTimer menu item
-    private class StartTimerActionHandler implements ActionListener {
+    private class StartTimerActionListener implements ActionListener {
         @Override
 
         // MODIFIES: this

@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import persistence.ToWrite;
 
 // Representation of a collection of texts
-public class ListOfText implements ToWrite {
+public class ListOfText implements ToWrite  {
     private List<Text> texts;
 
     // MODIFIES: this

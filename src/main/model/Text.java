@@ -117,6 +117,11 @@ public class Text implements ToWrite {
 
 
     public void setIsComplete(boolean b) {
+        if (b) {
+            EventLog.getInstance().logEvent(new Event("Marked " + this.title + " as complete."));
+        } else {
+            EventLog.getInstance().logEvent(new Event("Marked " + this.title + " as incomplete."));
+        }
         this.isComplete = b;
     }
 

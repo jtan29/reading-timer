@@ -22,7 +22,7 @@ public class TextButton {
         button.setVisible(true);
         parent.add(button);
         button.setFocusable(false);
-        button.addActionListener(new TextButtonActionHandler());
+        button.addActionListener(new TextButtonActionListener());
 
     }
 
@@ -32,7 +32,7 @@ public class TextButton {
     }
 
     // the action listener for the TextButton
-    private class TextButtonActionHandler implements ActionListener {
+    private class TextButtonActionListener implements ActionListener {
         @Override
 
         // MODIFIES: this

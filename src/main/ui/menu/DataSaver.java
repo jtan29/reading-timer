@@ -25,11 +25,11 @@ public class DataSaver extends MenuItem {
     // MODIFIES: this
     // EFFECTS: adds an action listener for the button to save data
     public void addListener() {
-        this.menuItem.addActionListener(new SaveActionHandler());
+        this.menuItem.addActionListener(new DataSaverActionListener());
     }
 
     // The action listener for the Save Data menu item
-    private class SaveActionHandler implements ActionListener {
+    private class DataSaverActionListener implements ActionListener {
         @Override
 
         // MODIFIES: this
