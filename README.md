@@ -48,7 +48,24 @@ from selected previously completed texts.
 recording to resume
 
 
-# Phase Four Task 2
+## Instructions for Grader (GUI)
+- Load data:
+  - Upon running ReadingTimerAppGUI, select either "Load saved data" to load previous data, or "skip" to start a new 
+  save
+- Add a new Text:
+  - To add a new Text, click the "Manage Texts" option in the menu bar, then 
+  click on "Add Text"
+  - Enter a title and click submit
+  - Enter a word count (must be an integer) and click submit
+  - Select one of the genre options from the buttons shown
+- Remove a Text:
+  - Select the text to be deleted
+  - Click on "Manage Texts" in the menu bar and select delete
+- Save a Text:
+  - Click on "Manage Texts" and select "Save Data"
+- Visual component:
+    - When timer is running, a timer icon is shown
+## Phase Four Task 2
 
 ```Changed genre for test 5 from "Any other non-fiction material" to "Non-fiction article".
 Fri Apr 07 12:22:20 PDT 2023
@@ -68,6 +85,14 @@ Ended timer for test 5
 Fri Apr 07 12:24:37 PDT 2023
 Marked test 5 as complete.
 ```
+
+## Phase Four Task 3
+
+I found the design of my program, as depicted in the UML diagram, to be quite convoluted and confusing.
+Some of the refactoring I would consider in improving it is making the ListOfText iterable, since it holds
+all the Texts in my project. Another change I would make is making an abstract class for my GUI
+buttons, since there is some duplication between buttons and some of the classes could probably be combined since
+the buttons are used for parts of one action.
 
 ## Citations
 
