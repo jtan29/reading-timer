@@ -32,13 +32,16 @@ public class ShowLogOnClose implements WindowListener {
         for (model.Event event : EventLog.getInstance()) {
             System.out.println(event.toString());
         }
-        ActionListener listener = new ActionListener() {
+        ActionListener task = new ActionListener() {
+            boolean alreadyDisposed = false;
             public void actionPerformed(ActionEvent e) {
                 if (frame.isDisplayable()) {
+                    alreadyDisposed = true;
                     frame.dispose();
                 }
             }
         };
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
