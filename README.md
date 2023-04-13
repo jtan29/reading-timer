@@ -88,11 +88,21 @@ Marked test 5 as complete.
 
 ## Phase Four Task 3
 
-I found the design of my program, as depicted in the UML diagram, to be quite convoluted and confusing.
-Some of the refactoring I would consider in improving it is making the ListOfText iterable, since it holds
-all the Texts in my project. Another change I would make is making an abstract class for my GUI
-buttons, since there is some duplication between buttons and some of the classes could probably be combined since
-the buttons are used for parts of one action.
+As I worked on building this program, there were several decisions that I made early on that I think are poor
+design choices in the long run. Some of the refactoring I would consider is making the ListOfText iterable, since
+several parts of the program require dealing with the Texts inside the ListOfText (currently being supplied by getters). 
+Another change I would make is making an abstract class for my GUI
+buttons, similar to the abstract class I made for my menu items. Due to the time constraint I made the buttons with
+the goal of making them work quickly, so some of the methods I used to get it working are probably 
+unnecessarily complicated or more tightly coupled than they should be. When refactoring I would like to re-examine them
+and adjust how they work as well as incorporating the abstract class.
+
+
+I also initially considered creating a subclass for texts specifically in
+online formats to support including links, which was ultimately scrapped since getting the subclass to work with
+the rest of the program (and ListOfText) was too time-consuming. I think with some
+refactoring it would be possible to include it again, perhaps by including another 
+list inside an iterable ListOfText.
 
 ## Citations
 
