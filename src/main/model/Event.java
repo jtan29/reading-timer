@@ -7,6 +7,8 @@ import java.util.Date;
 /**
  * Represents an event.
  */
+
+// A representation for an event
 public class Event {
     private static final int HASH_CONSTANT = 13;
     private Date dateLogged;
