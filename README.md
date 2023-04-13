@@ -107,3 +107,4 @@ list inside an iterable ListOfText.
 ## Citations
 
 - Parts of the persistence package are sourced from the JsonSerialization demo
+- Referenced Java documentation to create the listener for closing the GUI window

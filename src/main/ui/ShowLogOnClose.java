@@ -8,9 +8,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+// Shows a log of events when the GUI is closed
 public class ShowLogOnClose implements WindowListener {
     private ReadingTimerAppGUI frame;
 
+    // MODIFIES: this
+    // EFFECTS: makes a new ShowLogOnClose
     public ShowLogOnClose(ReadingTimerAppGUI frame) {
         this.frame = frame;
         frame.addWindowListener(this);
@@ -22,26 +25,20 @@ public class ShowLogOnClose implements WindowListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: prints the log of events and closes the window when the close button is clicked
     @Override
     public void windowClosing(WindowEvent e) {
         for (model.Event event : EventLog.getInstance()) {
             System.out.println(event.toString());
         }
-        ActionListener task = new ActionListener() {
-            boolean alreadyDisposed = false;
+        ActionListener listener = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (frame.isDisplayable()) {
-                    alreadyDisposed = true;
                     frame.dispose();
                 }
             }
         };
-        Timer timer = new Timer(500, task); //fire every half second
-        timer.setInitialDelay(2000);        //first delay 2 seconds
-        timer.setRepeats(false);
-        timer.start();
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
