@@ -5,7 +5,7 @@ import java.util.Date;
 
 
 /**
- * Represents an alarm system event.
+ * Represents an event.
  */
 public class Event {
     private static final int HASH_CONSTANT = 13;
@@ -18,6 +18,9 @@ public class Event {
      *
      * @param description a description of the event
      */
+
+    // MODIFIES: this
+    // EFFECTS: creates new Event
     public Event(String description) {
         dateLogged = Calendar.getInstance().getTime();
         this.description = description;
@@ -41,6 +44,7 @@ public class Event {
         return description;
     }
 
+    // EFFECTS: returns true for Event objects with matching dates logged, descriptions
     @Override
     public boolean equals(Object other) {
         if (other == null) {
@@ -57,11 +61,13 @@ public class Event {
                 && this.description.equals(otherEvent.description));
     }
 
+    // EFFECTS: returns the Event's hashcode
     @Override
     public int hashCode() {
         return (HASH_CONSTANT * dateLogged.hashCode() + description.hashCode());
     }
 
+    // EFFECTS: returns the Event's description as a string
     @Override
     public String toString() {
         return dateLogged.toString() + "\n" + description;
