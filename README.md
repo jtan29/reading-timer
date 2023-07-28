@@ -1,17 +1,17 @@
 
-# Reading time tracker
+# Reading Time Tracker
 
-**Proposed features:**
-- ways to store a text's name, associated genre, and
+**Features:**
+- store a text's name, associated genre, and
 word count (provided by the user)
-- ways to track multiple texts at the same time
+- track multiple texts at the same time
 - in-app timer
 - calculation of *estimated* reading speed using logged time
 - calculation of *estimated* reading time for given word count and genre, using
-the calculated reading speed from other tesxts
+the calculated reading speed from other texts
 - options to manually adjust logged time
 
-**Users:**
+**Potential Users:**
 
 - people interested in improving reading speed
 - people interested in estimating time needed to complete
@@ -47,7 +47,7 @@ from selected previously completed texts.
 recording to resume
 
 
-## Instructions for Grader (GUI)
+## Instructions (GUI)
 - Load data:
   - Upon running ReadingTimerAppGUI, select either "Load saved data" to load previous data, or "skip" to start a new 
   save
