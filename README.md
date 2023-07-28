@@ -2,25 +2,25 @@
 # Reading Time Tracker
 
 **Features:**
-- store a text's name, associated genre, and
+- Store a text's name, associated genre, and
 word count (provided by the user)
-- track multiple texts at the same time
-- in-app timer
-- calculation of *estimated* reading speed using logged time
-- calculation of *estimated* reading time for given word count and genre, using
+- Track multiple texts at the same time
+- In-app timer
+- Calculation of *estimated* reading speed using logged time
+- Calculation of *estimated* reading time for given word count and genre, using
 the calculated reading speed from other texts
-- options to manually adjust logged time
+- Options to manually adjust logged time
 
 **Potential Users:**
 
-- people interested in improving reading speed
-- people interested in estimating time needed to complete
+- People interested in improving reading speed
+- People interested in estimating time needed to complete
 reading a given text
-- people interested in tracking how much time they spend reading
+- People interested in tracking how much time they spend reading
 
 **Why:**
 
-* reading/writing is one of my hobbies, and something that I wish
+* Reading/writing is one of my hobbies, and something that I wish
 I had when reading was a way to keep track of how long it took me to finish
 a particular book or other text, and how this time frame could vary depending on the genre.
 Additionally, I could see this being useful to estimate the time that should be alloted
